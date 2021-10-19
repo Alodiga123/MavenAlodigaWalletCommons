@@ -7,11 +7,6 @@
     <packaging>jar</packaging>
     <dependencies>
         <dependency>
-            <groupId>BussinesCommons</groupId>
-            <artifactId>BussinesCommosn</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
             <version>1.2.17</version>
@@ -30,20 +25,35 @@
             <type>jar</type>
         </dependency>
         <dependency>
-            <groupId>RegistroUnificadoWsClient</groupId>
-            <artifactId>RegistroUnificadoWsClient</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>MassivaSms</groupId>
-            <artifactId>MassivaSms</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
             <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>com.alodiga</groupId>
+            <artifactId>MasivaSmsIntegrationMaven</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alodiga</groupId>
+            <artifactId>MavenRegistroUnificadoWsClient</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.xml.ws</groupId>
+            <artifactId>jaxws-api</artifactId>
+            <version>2.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alodiga</groupId>
+            <artifactId>MavenBusinesPortalCommons</artifactId>
+            <version>1.0</version>
         </dependency>
         <dependency>
             <groupId>javax</groupId>
