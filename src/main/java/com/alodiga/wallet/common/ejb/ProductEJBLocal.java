@@ -38,6 +38,8 @@ public interface ProductEJBLocal extends WalletGenericEJBLocal {
     public List<Product> getProducts(EJBRequest request) throws GeneralException, EmptyListException, NullParameterException;
 
     public List<Product> getProductsByEnterprise(Long enterpriseId) throws GeneralException, EmptyListException, NullParameterException;
+    
+    public List<Product> getProductsByWalletUser(Long walletUserId) throws GeneralException, EmptyListException, NullParameterException;
 
     public List<Product> filterProducts(EJBRequest request) throws GeneralException, EmptyListException, NullParameterException;
 
