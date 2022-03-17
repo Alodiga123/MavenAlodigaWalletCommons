@@ -108,6 +108,7 @@ public interface UtilsEJBLocal extends WalletGenericEJB {
     public Bank saveBank(Bank bank) throws RegisterNotFoundException, NullParameterException, GeneralException;
     public List<Bank> getSearchBank(String name) throws EmptyListException, GeneralException, NullParameterException;
     public List<Bank> searchBankByCountry(String name) throws EmptyListException, GeneralException, NullParameterException;
+    public List<Bank> getBankByCountry(Long countryId) throws EmptyListException, GeneralException, NullParameterException;
     
     //AccountBank
     public Long validateAccountBankExistsBD(Long userId, Long bankId, String accountNumber) throws GeneralException, NullParameterException;

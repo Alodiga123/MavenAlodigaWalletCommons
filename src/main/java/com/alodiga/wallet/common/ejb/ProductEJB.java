@@ -42,6 +42,8 @@ public interface ProductEJB extends WalletGenericEJB {
     
     public List<Product> getProductsByEnterprise(Long enterpriseId) throws GeneralException, EmptyListException, NullParameterException;
     
+    public List<Product> getProductsByWalletUser(Long walletUserId) throws GeneralException, EmptyListException, NullParameterException;
+    
     public Product loadProduct(EJBRequest request) throws GeneralException, RegisterNotFoundException, NullParameterException;
 
     public Product loadProductById(Long productId) throws GeneralException, RegisterNotFoundException, NullParameterException;
