@@ -43,18 +43,20 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 public class OriginApplication extends AbstractWalletEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+
     @Size(max = 50)
     @Column(name = "name")
     private String name;
-    @Basic(optional = false)
+
     @Size(min = 1, max = 6)
     @Column(name = "code")
     private String code;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "originApplicationId")
     private Collection<PersonType> personTypeCollection;
 

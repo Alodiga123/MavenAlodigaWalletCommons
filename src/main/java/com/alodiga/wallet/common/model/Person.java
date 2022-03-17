@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.alodiga.wallet.common.model;
 
 import com.alodiga.wallet.common.exception.TableNotFoundException;
@@ -11,7 +6,6 @@ import com.alodiga.wallet.common.utils.QueryConstants;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -55,44 +49,58 @@ public class Person extends AbstractWalletEntity implements Serializable {
     private Collection<User> userCollection;
 
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id")
     private Long id;
+    
     @Size(max = 50)
     @Column(name = "email")
     private String email;
+    
     @Size(max = 50)
     @Column(name = "webSite")
     private String webSite;
+    
     @Column(name = "createDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createDate;
+    
     @Column(name = "updateDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateDate;
+    
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "personId")
     private NaturalPerson naturalPerson;
+    
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "personId")
     private PhonePerson phonePerson;
+    
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "personId")
     private LegalPerson legalPerson;
+    
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "personId")
     private LegalRepresentative legalRepresentative;
+    
     @JoinColumn(name = "countryId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Country countryId;
+    
     @JoinColumn(name = "personClassificationId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private PersonClassification personClassificationId;
+    
     @JoinColumn(name = "personTypeId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private PersonType personTypeId;
+    
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "businessPersonId")
     private AffiliationRequest affiliationRequest;
+    
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "personId")
     private ReviewOfac reviewOfac;
+    
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "personId")
     private PersonHasAddress personHasAddress;
     

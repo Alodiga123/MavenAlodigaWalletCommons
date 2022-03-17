@@ -7,7 +7,6 @@ package com.alodiga.wallet.common.model;
 
 import java.io.Serializable;
 import java.util.Collection;
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -37,25 +36,27 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "maw_civil_status")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "CivilStatus.findAll", query = "SELECT c FROM CivilStatus c")
-    , @NamedQuery(name = "CivilStatus.findById", query = "SELECT c FROM CivilStatus c WHERE c.id = :id")
-    , @NamedQuery(name = "CivilStatus.findByDescription", query = "SELECT c FROM CivilStatus c WHERE c.description = :description")})
+    @NamedQuery(name = "CivilStatus.findAll", query = "SELECT c FROM CivilStatus c"),
+    @NamedQuery(name = "CivilStatus.findById", query = "SELECT c FROM CivilStatus c WHERE c.id = :id"),
+    @NamedQuery(name = "CivilStatus.findByDescription", query = "SELECT c FROM CivilStatus c WHERE c.description = :description")})
 public class CivilStatus extends AbstractWalletEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
+
     @Size(min = 1, max = 50)
     @Column(name = "description")
     private String description;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "civilStatusId")
     private Collection<NaturalPerson> naturalPersonCollection;
+
     @JoinColumn(name = "languageId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Language languageId;
 
     public CivilStatus() {
@@ -128,7 +129,7 @@ public class CivilStatus extends AbstractWalletEntity implements Serializable {
     public String toString() {
         return "com.alodiga.wallet.common.model.CivilStatus[ id=" + id + " ]";
     }
-    
+
     @Override
     public Object getPk() {
         return getId();

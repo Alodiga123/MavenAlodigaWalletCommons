@@ -9,9 +9,6 @@ import com.alodiga.wallet.common.exception.TableNotFoundException;
 import com.alodiga.wallet.common.genericEJB.AbstractWalletEntity;
 import com.alodiga.wallet.common.utils.QueryConstants;
 import java.io.Serializable;
-import java.util.Collection;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,12 +18,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
-import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
@@ -45,19 +39,22 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 public class DocumentsPersonType extends AbstractWalletEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+
     @Size(max = 50)
     @Column(name = "description")
     private String description;
+
     @Size(max = 10)
     @Column(name = "codeIdentification")
     private String codeIdentification;
+
     @JoinColumn(name = "personTypeId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private PersonType personTypeId;
 
     public DocumentsPersonType() {
@@ -123,7 +120,6 @@ public class DocumentsPersonType extends AbstractWalletEntity implements Seriali
     public String toString() {
         return "com.alodiga.wallet.common.model.DocumentsPersonType[ id=" + id + " ]";
     }
-    
 
     @Override
     public Object getPk() {

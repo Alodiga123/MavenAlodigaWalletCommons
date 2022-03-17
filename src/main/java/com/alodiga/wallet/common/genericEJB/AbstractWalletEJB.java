@@ -25,8 +25,6 @@ import javax.persistence.RollbackException;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
-
-
 public class AbstractWalletEJB {
 
     protected EntityManager entityManager;
@@ -35,6 +33,7 @@ public class AbstractWalletEJB {
     protected EntityManagerWrapper entityManagerWrapper = null;
     protected MessageFormatHelper sysMessages, sysError;
     protected EntityManagerFactory emf = null;
+
     public AbstractWalletEJB() {
         emf = Persistence.createEntityManagerFactory("AlodigaWalletPU");
         entityManagerWrapper = new EntityManagerWrapper();
@@ -78,7 +77,7 @@ public class AbstractWalletEJB {
 
     protected Object saveEntity(Object entity, Logger logger, String methodName) throws GeneralException, NullParameterException {
         if (entity == null) {
-            throw new NullParameterException( sysError.format(EjbConstants.ERR_NULL_PARAMETER, this.getClass(), methodName, "Entity"), null);
+            throw new NullParameterException(sysError.format(EjbConstants.ERR_NULL_PARAMETER, this.getClass(), methodName, "Entity"), null);
         }
         EntityTransaction transaction = entityManager.getTransaction();
         try {
@@ -101,7 +100,7 @@ public class AbstractWalletEJB {
             } catch (IllegalStateException e1) {
                 throw new GeneralException(logger, sysError.format(EjbConstants.ERR_GENERAL_EXCEPTION, this.getClass(), methodName, e.getMessage()), e);
             } catch (SecurityException e1) {
-                 throw new GeneralException(logger, sysError.format(EjbConstants.ERR_GENERAL_EXCEPTION, this.getClass(), methodName, e.getMessage()), e);
+                throw new GeneralException(logger, sysError.format(EjbConstants.ERR_GENERAL_EXCEPTION, this.getClass(), methodName, e.getMessage()), e);
             }
             throw new GeneralException(logger, sysError.format(EjbConstants.ERR_GENERAL_EXCEPTION, this.getClass(), methodName, e.getMessage()), e);
         }
@@ -128,7 +127,7 @@ public class AbstractWalletEJB {
         Object oReturn = null;
         if (pk == null) {
             String error = sysError.format(EjbConstants.ERR_NULL_PARAMETER, clazz.getSimpleName(), methodName, "id");
-            throw new NullParameterException( error, null);
+            throw new NullParameterException(error, null);
         }
         try {
             oReturn = entityManagerWrapper.load(clazz, pk);
@@ -163,43 +162,40 @@ public class AbstractWalletEJB {
         return object;
     }
 
-
     protected Object removeEntity(EJBRequest request, Logger logger, String methodName) throws GeneralException, NullParameterException {
         if (request == null) {
-            throw new NullParameterException( "", null);
+            throw new NullParameterException("", null);
         }
         return removeEntity(request.getParam(), logger, methodName);
     }
 
     protected Object saveEntity(EJBRequest request, Logger logger, String methodName) throws GeneralException, NullParameterException {
         if (request == null) {
-            throw new NullParameterException( "", null);
+            throw new NullParameterException("", null);
         }
         return saveEntity(request.getParam(), logger, methodName);
     }
 
     protected Object listEntities(Class clazz, EJBRequest request, Logger logger, String methodName) throws GeneralException, EmptyListException, NullParameterException {
         if (request == null) {
-            throw new NullParameterException( "", null);
+            throw new NullParameterException("", null);
         }
         return listEntities(clazz, request.getFirst(), request.getLimit(), logger, methodName);
     }
 
     protected Object loadEntity(Class clazz, EJBRequest request, Logger logger, String methodName) throws NullParameterException, GeneralException, RegisterNotFoundException {
         if (request == null) {
-            throw new NullParameterException( "", null);
+            throw new NullParameterException("", null);
         }
         return loadEntity(clazz, request.getParam(), logger, methodName);
     }
 
     protected Object getNamedQueryResult(Class clazz, String namedQueryName, EJBRequest request, String method, Logger logger, String returnObjectName) throws EmptyListException, GeneralException, NullParameterException {
         if (request == null) {
-            throw new NullParameterException( "", null);
+            throw new NullParameterException("", null);
         }
         return getNamedQueryResult(clazz, namedQueryName, request.getParams(), method, logger, returnObjectName, request.getFirst(), request.getLimit());
     }
-
-
 
     public void executeNameQuery(Class clazz, String namedQueryName, Map<? extends Object, ? extends Object> map, String method, Logger logger, String returnObjectName, Integer first, Integer limit) throws EmptyListException, GeneralException {
 
@@ -234,7 +230,7 @@ public class AbstractWalletEJB {
         Object object = null;
         Map map = request.getParams();
         if (map == null) {
-            throw new NullParameterException( "Map data is empty", null);
+            throw new NullParameterException("Map data is empty", null);
         }
         try {
             //System.out.println(".........A1.........."+(new Date()));
@@ -251,7 +247,7 @@ public class AbstractWalletEJB {
         }
         return object;
     }
-    
+
     //Este metodo se utiliza para que el procesamiento sea mas rapido pero no guardara registro en la bitacora.
     protected Object saveEntity(Object entity) throws GeneralException, NullParameterException {
         if (entity == null) {
@@ -270,8 +266,8 @@ public class AbstractWalletEJB {
                 //processAuditData(EventTypeEnum.CREATE, entity, auditData, entityManagerWrapper);
             }
             transaction.commit();
-        }   catch (Exception e) {
-                e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             try {
                 transaction.rollback();
             } catch (Exception e1) {
@@ -283,10 +279,9 @@ public class AbstractWalletEJB {
         return entity;
     }
 
-    
-      //Este metodo se utiliza para que el procesamiento sea mas rapido pero no guardara registro en la bitacora.
+    //Este metodo se utiliza para que el procesamiento sea mas rapido pero no guardara registro en la bitacora.
     protected Object saveEntityObject(Object entity) throws GeneralException, NullParameterException {
-           if (entity == null) {
+        if (entity == null) {
             System.out.println("EJB empty");
             throw new NullParameterException("NullParameterException ");
         }
@@ -302,7 +297,7 @@ public class AbstractWalletEJB {
                 //processAuditData(EventTypeEnum.CREATE, entity, auditData, entityManagerWrapper);
             }
             transaction.commit();
-        }    catch (RollbackException re) {
+        } catch (RollbackException re) {
             re.printStackTrace();
             // <---------------------------------------- hibernate here
             throw re;
@@ -313,11 +308,11 @@ public class AbstractWalletEJB {
         } catch (Exception e) {
             transaction.rollback();
             e.printStackTrace(System.err);
-            
+
         }
 
         return entity;
-       
+
     }
-    
+
 }

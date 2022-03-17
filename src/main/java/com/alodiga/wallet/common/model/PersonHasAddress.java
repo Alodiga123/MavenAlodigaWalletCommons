@@ -39,20 +39,24 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class PersonHasAddress extends AbstractWalletEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+
     @JoinColumn(name = "addressId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Address addressId;
+
     @JoinColumn(name = "personId", referencedColumnName = "id")
-    @OneToOne(optional = false)
+    @OneToOne
     private Person personId;
+
     @Column(name = "createDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createDate;
+
     @Column(name = "updateDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateDate;

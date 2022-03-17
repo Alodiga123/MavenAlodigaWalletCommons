@@ -50,40 +50,49 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class PhonePerson extends AbstractWalletEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id")
     private Long id;
+
     @Size(max = 4)
     @Column(name = "countryCode")
     private String countryCode;
+
     @Size(max = 10)
     @Column(name = "areaCode")
     private String areaCode;
-    @Basic(optional = false)
+
     @Size(min = 1, max = 10)
     @Column(name = "numberPhone")
     private String numberPhone;
+
     @Size(max = 10)
     @Column(name = "extensionPhoneNumber")
     private String extensionPhoneNumber;
+
     @Column(name = "indMainPhone")
     private Boolean indMainPhone;
+
     @Column(name = "createDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createDate;
+
     @Column(name = "updateDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateDate;
+
     @JoinColumn(name = "personId", referencedColumnName = "id")
-    @OneToOne(optional = false)
+    @OneToOne
     private Person personId;
+    
     @JoinColumn(name = "countryId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Country countryId;
+    
     @JoinColumn(name = "phoneTypeId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private PhoneType phoneTypeId;
 
     public PhonePerson() {

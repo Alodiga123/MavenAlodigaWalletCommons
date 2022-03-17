@@ -10,7 +10,6 @@ import com.alodiga.wallet.common.genericEJB.AbstractWalletEntity;
 import com.alodiga.wallet.common.utils.QueryConstants;
 import java.io.Serializable;
 import java.util.Collection;
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -43,31 +42,36 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     @NamedQuery(name = "PersonType.findByDescription", query = "SELECT p FROM PersonType p WHERE p.description = :description"),
     @NamedQuery(name = "PersonType.findBycountryId", query = "SELECT p FROM PersonType p WHERE p.countryId.id = :countryId"),
     @NamedQuery(name = QueryConstants.PERSON_TYPE_BY_COUNTRY, query = "SELECT p FROM PersonType p WHERE p.countryId.id=:countryId"),
-    @NamedQuery(name = QueryConstants.PERSON_TYPE_BY_COUNTRY_BY_IND_NATURAL_PERSON,query ="SELECT p FROM PersonType p WHERE p.countryId.id=:countryId AND p.originApplicationId.id=:originApplicationId AND p.indNaturalPerson=:indNaturalPerson"),
-    @NamedQuery(name = QueryConstants.PERSON_TYPE_BY_COUNTRY_BY_ORIGIN_APPLICATION_PORTAL,query ="SELECT p FROM PersonType p WHERE p.countryId.id=:countryId AND p.originApplicationId.id=3"),
-    @NamedQuery(name = QueryConstants.PERSON_TYPE_BY_COUNTRY_BY_ORIGIN_APPLICATION,query ="SELECT p FROM PersonType p WHERE p.countryId.id=:countryId AND p.originApplicationId.id=:originApplicationId")})
+    @NamedQuery(name = QueryConstants.PERSON_TYPE_BY_COUNTRY_BY_IND_NATURAL_PERSON, query = "SELECT p FROM PersonType p WHERE p.countryId.id=:countryId AND p.originApplicationId.id=:originApplicationId AND p.indNaturalPerson=:indNaturalPerson"),
+    @NamedQuery(name = QueryConstants.PERSON_TYPE_BY_COUNTRY_BY_ORIGIN_APPLICATION_PORTAL, query = "SELECT p FROM PersonType p WHERE p.countryId.id=:countryId AND p.originApplicationId.id=3"),
+    @NamedQuery(name = QueryConstants.PERSON_TYPE_BY_COUNTRY_BY_ORIGIN_APPLICATION, query = "SELECT p FROM PersonType p WHERE p.countryId.id=:countryId AND p.originApplicationId.id=:originApplicationId")})
 
 public class PersonType extends AbstractWalletEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+
     @Size(max = 50)
     @Column(name = "description")
     private String description;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "personTypeId")
     private Collection<DocumentsPersonType> documentsPersonTypeCollection;
+
     @JoinColumn(name = "countryId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Country countryId;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "personTypeId")
     private Collection<CollectionsRequest> collectionsRequestCollection;
+
     @JoinColumn(name = "originApplicationId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private OriginApplication originApplicationId;
+
     @Column(name = "indNaturalPerson")
     private Boolean indNaturalPerson;
 
@@ -119,7 +123,7 @@ public class PersonType extends AbstractWalletEntity implements Serializable {
     public void setOriginApplicationId(OriginApplication originApplicationId) {
         this.originApplicationId = originApplicationId;
     }
-    
+
     public Boolean getIndNaturalPerson() {
         return indNaturalPerson;
     }

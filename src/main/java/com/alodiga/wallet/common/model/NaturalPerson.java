@@ -53,58 +53,74 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class NaturalPerson extends AbstractWalletEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id")
     private Long id;
+    
     @Size(max = 40)
     @Column(name = "identificationNumber")
     private String identificationNumber;
+    
     @Column(name = "dueDateDocumentIdentification")
     @Temporal(TemporalType.DATE)
     private Date dueDateDocumentIdentification;
+    
     @Size(max = 40)
     @Column(name = "identificactionNumberOld")
     private String identificactionNumberOld;
+    
     @Size(max = 40)
     @Column(name = "firstName")
     private String firstName;
+    
     @Size(max = 40)
     @Column(name = "lastName")
     private String lastName;
+    
     @Size(max = 40)
     @Column(name = "marriedLastName")
     private String marriedLastName;
+    
     @Size(max = 1)
     @Column(name = "gender")
     private String gender;
+    
     @Size(max = 50)
     @Column(name = "placeBirth")
     private String placeBirth;
+    
     @Column(name = "dateBirth")
     @Temporal(TemporalType.DATE)
     private Date dateBirth;
+    
     @Column(name = "createDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createDate;
+    
     @Column(name = "updateDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateDate;
+    
     @JoinColumn(name = "civilStatusId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private CivilStatus civilStatusId;
+    
     @JoinColumn(name = "documentsPersonTypeId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private DocumentsPersonType documentsPersonTypeId;
+    
     @JoinColumn(name = "personId", referencedColumnName = "id")
-    @OneToOne(optional = false)
+    @OneToOne
     private Person personId;
+    
     @JoinColumn(name = "professionId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Profession professionId;
+    
     @JoinColumn(name = "statusApplicantId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private StatusApplicant statusApplicantId;
 
     public NaturalPerson() {
