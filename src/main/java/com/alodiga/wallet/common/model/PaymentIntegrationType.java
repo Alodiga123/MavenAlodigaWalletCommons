@@ -1,14 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.alodiga.wallet.common.model;
 
 import java.io.Serializable;
 import java.util.Collection;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,8 +16,6 @@ import javax.xml.bind.annotation.XmlTransient;
 
 import com.alodiga.wallet.common.exception.TableNotFoundException;
 import com.alodiga.wallet.common.genericEJB.AbstractWalletEntity;
-import com.alodiga.wallet.common.model.PaymentIntegrationType;
-import com.alodiga.wallet.common.model.PaymentPatner;
 
 /**
  *
@@ -39,19 +30,21 @@ import com.alodiga.wallet.common.model.PaymentPatner;
     @NamedQuery(name = "PaymentIntegrationType.findByName", query = "SELECT p FROM PaymentIntegrationType p WHERE p.name = :name"),
     @NamedQuery(name = "PaymentIntegrationType.findByEnabled", query = "SELECT p FROM PaymentIntegrationType p WHERE p.enabled = :enabled")})
 public class PaymentIntegrationType extends AbstractWalletEntity implements Serializable {
+
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @Basic(optional = false)
+
     @Column(name = "name")
     private String name;
-    @Basic(optional = false)
+
     @Column(name = "enabled")
     private boolean enabled;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "integrationTypeId")
+
+    @OneToMany(mappedBy = "integrationTypeId")
     private Collection<PaymentPatner> paymentPatnerCollection;
 
     public PaymentIntegrationType() {
@@ -124,7 +117,7 @@ public class PaymentIntegrationType extends AbstractWalletEntity implements Seri
     public String toString() {
         return "dto.PaymentIntegrationType[ id=" + id + " ]";
     }
-    
+
     @Override
     public Object getPk() {
         return getId();

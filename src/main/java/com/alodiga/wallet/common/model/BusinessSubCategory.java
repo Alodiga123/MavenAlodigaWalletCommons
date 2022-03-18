@@ -9,7 +9,6 @@ import com.alodiga.wallet.common.exception.TableNotFoundException;
 import com.alodiga.wallet.common.genericEJB.AbstractWalletEntity;
 import com.alodiga.wallet.common.utils.QueryConstants;
 import java.io.Serializable;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -36,23 +35,26 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "BusinessSubCategory.findByDescription", query = "SELECT b FROM BusinessSubCategory b WHERE b.description = :description"),
     @NamedQuery(name = "BusinessSubCategory.findByMccCode", query = "SELECT b FROM BusinessSubCategory b WHERE b.mccCode = :mccCode"),
     @NamedQuery(name = QueryConstants.BUSINESS_SUB_CATEGORY_BY_CATEGORY, query = "SELECT b FROM BusinessSubCategory b WHERE b.businessCategoryId.id= :businessCategoryId"),})
-    @NamedQuery(name = QueryConstants.CODEMCC_EXIST_IN_BD_BUSINESS_SUB_CATEGORY, query = "SELECT b FROM BusinessSubCategory b WHERE b.mccCode= :mccCode")
+@NamedQuery(name = QueryConstants.CODEMCC_EXIST_IN_BD_BUSINESS_SUB_CATEGORY, query = "SELECT b FROM BusinessSubCategory b WHERE b.mccCode= :mccCode")
 public class BusinessSubCategory extends AbstractWalletEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+
     @Size(max = 80)
     @Column(name = "description")
     private String description;
+
     @Size(max = 10)
     @Column(name = "mccCode")
     private String mccCode;
+
     @JoinColumn(name = "businessCategoryId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private BusinessCategory businessCategoryId;
 
     public BusinessSubCategory() {

@@ -7,7 +7,6 @@ package com.alodiga.wallet.common.model;
 
 import java.io.Serializable;
 import java.util.Collection;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,9 +23,6 @@ import javax.xml.bind.annotation.XmlTransient;
 
 import com.alodiga.wallet.common.exception.TableNotFoundException;
 import com.alodiga.wallet.common.genericEJB.AbstractWalletEntity;
-import com.alodiga.wallet.common.model.Address;
-import com.alodiga.wallet.common.model.City;
-import com.alodiga.wallet.common.model.State;
 
 /**
  *
@@ -41,18 +37,21 @@ import com.alodiga.wallet.common.model.State;
     @NamedQuery(name = "City.findBystateId", query = "SELECT c FROM City c WHERE c.stateId.id = :stateId"),
     @NamedQuery(name = "City.findByName", query = "SELECT c FROM City c WHERE c.name = :name")})
 public class City extends AbstractWalletEntity implements Serializable {
+
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @Basic(optional = false)
+
     @Column(name = "name")
     private String name;
+
     @JoinColumn(name = "stateId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private State stateId;
+
     @OneToMany(mappedBy = "cityId")
     private Collection<Address> addressCollection;
 
@@ -125,7 +124,7 @@ public class City extends AbstractWalletEntity implements Serializable {
     public String toString() {
         return "dto.City[ id=" + id + " ]";
     }
-    
+
     @Override
     public Object getPk() {
         return getId();

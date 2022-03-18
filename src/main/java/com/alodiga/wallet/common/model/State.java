@@ -1,14 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.alodiga.wallet.common.model;
 
 import java.io.Serializable;
 import java.util.Collection;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,11 +18,6 @@ import javax.xml.bind.annotation.XmlTransient;
 
 import com.alodiga.wallet.common.exception.TableNotFoundException;
 import com.alodiga.wallet.common.genericEJB.AbstractWalletEntity;
-import com.alodiga.wallet.common.model.Address;
-import com.alodiga.wallet.common.model.City;
-import com.alodiga.wallet.common.model.Country;
-import com.alodiga.wallet.common.model.County;
-import com.alodiga.wallet.common.model.State;
 import javax.xml.bind.annotation.XmlType;
 
 /**
@@ -46,23 +34,25 @@ import javax.xml.bind.annotation.XmlType;
     @NamedQuery(name = "State.findBycountryId", query = "SELECT s FROM State s WHERE s.countryId.id = :countryId"),
     @NamedQuery(name = "State.findByName", query = "SELECT s FROM State s WHERE s.name = :name")})
 public class State extends AbstractWalletEntity implements Serializable {
+
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @Basic(optional = false)
+
     @Column(name = "name")
     private String name;
+
     @JoinColumn(name = "countryId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Country countryId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "stateId")
+
+    @OneToMany(mappedBy = "stateId")
     private Collection<City> cityCollection;
-//    @OneToMany(mappedBy = "stateId")
-//    private Collection<Address> addressCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "stateId")
+
+    @OneToMany(mappedBy = "stateId")
     private Collection<County> countyCollection;
 
     public State() {
@@ -118,7 +108,6 @@ public class State extends AbstractWalletEntity implements Serializable {
 //    public void setAddressCollection(Collection<Address> addressCollection) {
 //        this.addressCollection = addressCollection;
 //    }
-
     @XmlTransient
     public Collection<County> getCountyCollection() {
         return countyCollection;
@@ -152,7 +141,7 @@ public class State extends AbstractWalletEntity implements Serializable {
     public String toString() {
         return "dto.State[ id=" + id + " ]";
     }
-    
+
     @Override
     public Object getPk() {
         return getId();

@@ -1,14 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.alodiga.wallet.common.model;
 
 import java.io.Serializable;
-import java.util.Collection;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,16 +14,11 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 import com.alodiga.wallet.common.exception.TableNotFoundException;
 import com.alodiga.wallet.common.genericEJB.AbstractWalletEntity;
-import com.alodiga.wallet.common.model.Report;
-import com.alodiga.wallet.common.model.ReportParameter;
-import com.alodiga.wallet.common.model.ReportType;
 import java.util.List;
 import javax.persistence.FetchType;
-import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
@@ -49,32 +36,37 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 public class Report extends AbstractWalletEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @Basic(optional = false)
+
     @Column(name = "name")
     private String name;
-    @Basic(optional = false)
+
     @Lob
     @Column(name = "description")
     private String description;
+
     @Lob
     @Column(name = "query")
     private String query;
+
     @Column(name = "webServiceUrl")
     private String webServiceUrl;
-    @Basic(optional = false)
+
     @Column(name = "enabled")
     private boolean enabled;
+
     @JoinColumn(name = "reportTypeId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private ReportType reportTypeId;
-    @OneToMany(mappedBy = "reportId", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+
+    @OneToMany(mappedBy = "reportId", fetch = FetchType.EAGER)
     private List<ReportHasProfile> reportHasProfiles;
-    @OneToMany(mappedBy = "reportId", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+
+    @OneToMany(mappedBy = "reportId", fetch = FetchType.EAGER)
     private List<ReportParameter> reportParameters;
 
     public Report() {
@@ -187,7 +179,7 @@ public class Report extends AbstractWalletEntity implements Serializable {
     public String toString() {
         return "dto.Report[ id=" + id + " ]";
     }
-    
+
     @Override
     public Object getPk() {
         return getId();

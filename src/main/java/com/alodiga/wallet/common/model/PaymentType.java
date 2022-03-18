@@ -1,14 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.alodiga.wallet.common.model;
 
 import java.io.Serializable;
 import java.util.Collection;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -41,16 +34,17 @@ public class PaymentType extends AbstractWalletEntity implements Serializable {
 
     @OneToMany(mappedBy = "paymentTypeId")
     private Collection<BankOperation> bankOperationCollection;
+
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @Basic(optional = false)
+
     @Column(name = "name")
     private String name;
-    @Basic(optional = false)
+
     @Column(name = "enabled")
     private boolean enabled;
 
@@ -115,7 +109,7 @@ public class PaymentType extends AbstractWalletEntity implements Serializable {
     public String toString() {
         return "dto.PaymentType[ id=" + id + " ]";
     }
-    
+
     @Override
     public Object getPk() {
         return getId();

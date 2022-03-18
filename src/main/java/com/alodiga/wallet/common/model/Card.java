@@ -1,13 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.alodiga.wallet.common.model;
 
 import java.io.Serializable;
 import java.math.BigInteger;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,30 +24,34 @@ import javax.persistence.ManyToOne;
 @Table(name = "card")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Card.findAll", query = "SELECT c FROM Card c")
-    , @NamedQuery(name = "Card.findById", query = "SELECT c FROM Card c WHERE c.id = :id")
-    , @NamedQuery(name = "Card.findByNumberCard", query = "SELECT c FROM Card c WHERE c.numberCard = :numberCard")
-    , @NamedQuery(name = "Card.findByParentId", query = "SELECT c FROM Card c WHERE c.parentId = :parentId")})
+    @NamedQuery(name = "Card.findAll", query = "SELECT c FROM Card c"),
+    @NamedQuery(name = "Card.findById", query = "SELECT c FROM Card c WHERE c.id = :id"),
+    @NamedQuery(name = "Card.findByNumberCard", query = "SELECT c FROM Card c WHERE c.numberCard = :numberCard"),
+    @NamedQuery(name = "Card.findByParentId", query = "SELECT c FROM Card c WHERE c.parentId = :parentId")})
 public class Card extends AbstractWalletEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id")
     private Long id;
+
     @Column(name = "numberCard")
     private String numberCard;
+
     @Column(name = "parentId")
     private BigInteger parentId;
+
     @Column(name = "nameCard")
     private String nameCard;
+
     @Column(name = "userDestinationId")
     private BigInteger userDestinationId;
+
     @JoinColumn(name = "statusCardId", referencedColumnName = "id")
     @ManyToOne
     private StatusCard statusCardId;
-    
 
     public Card() {
     }
@@ -103,12 +101,6 @@ public class Card extends AbstractWalletEntity implements Serializable {
         this.userDestinationId = userDestinationId;
     }
 
-    
-    
-    
-
-   
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -151,5 +143,5 @@ public class Card extends AbstractWalletEntity implements Serializable {
     public void setStatusCardId(StatusCard statusCardId) {
         this.statusCardId = statusCardId;
     }
-    
+
 }

@@ -1,13 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.alodiga.wallet.common.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,33 +23,33 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "business_has_product")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "BusinessHasProduct.findAll", query = "SELECT b FROM BusinessHasProduct b")
-    , @NamedQuery(name = "BusinessHasProduct.findById", query = "SELECT b FROM BusinessHasProduct b WHERE b.id = :id")
-    , @NamedQuery(name = "BusinessHasProduct.findByProductId", query = "SELECT b FROM BusinessHasProduct b WHERE b.productId = :productId")
-    , @NamedQuery(name = "BusinessHasProduct.findByBusinessId", query = "SELECT b FROM BusinessHasProduct b WHERE b.businessId = :businessId")
-    , @NamedQuery(name = "BusinessHasProduct.findByBeginningDate", query = "SELECT b FROM BusinessHasProduct b WHERE b.beginningDate = :beginningDate")
-    , @NamedQuery(name = "BusinessHasProduct.findByEndingDate", query = "SELECT b FROM BusinessHasProduct b WHERE b.endingDate = :endingDate")})
+    @NamedQuery(name = "BusinessHasProduct.findAll", query = "SELECT b FROM BusinessHasProduct b"),
+    @NamedQuery(name = "BusinessHasProduct.findById", query = "SELECT b FROM BusinessHasProduct b WHERE b.id = :id"),
+    @NamedQuery(name = "BusinessHasProduct.findByProductId", query = "SELECT b FROM BusinessHasProduct b WHERE b.productId = :productId"),
+    @NamedQuery(name = "BusinessHasProduct.findByBusinessId", query = "SELECT b FROM BusinessHasProduct b WHERE b.businessId = :businessId"),
+    @NamedQuery(name = "BusinessHasProduct.findByBeginningDate", query = "SELECT b FROM BusinessHasProduct b WHERE b.beginningDate = :beginningDate"),
+    @NamedQuery(name = "BusinessHasProduct.findByEndingDate", query = "SELECT b FROM BusinessHasProduct b WHERE b.endingDate = :endingDate")})
 public class BusinessHasProduct implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @Basic(optional = false)
+
     @NotNull
     @Column(name = "productId")
     private long productId;
-    @Basic(optional = false)
+
     @NotNull
     @Column(name = "businessId")
     private long businessId;
-    @Basic(optional = false)
+
     @NotNull
     @Column(name = "beginningDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date beginningDate;
+
     @Column(name = "endingDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date endingDate;
@@ -138,5 +132,5 @@ public class BusinessHasProduct implements Serializable {
     public String toString() {
         return "com.alodiga.wallet.common.model.BusinessHasProduct[ id=" + id + " ]";
     }
-    
+
 }

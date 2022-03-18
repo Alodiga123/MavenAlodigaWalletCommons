@@ -15,6 +15,7 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import com.alodiga.wallet.common.exception.TableNotFoundException;
 import com.alodiga.wallet.common.genericEJB.AbstractWalletEntity;
+import javax.persistence.FetchType;
 import javax.xml.bind.annotation.XmlType;
 
 /**
@@ -82,27 +83,27 @@ public class Address extends AbstractWalletEntity implements Serializable {
     private boolean indMainAddress;
 
     @JoinColumn(name = "addressTypeId", referencedColumnName = "id")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private AddressType addressTypeId;
 
     @JoinColumn(name = "cityId", referencedColumnName = "id")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private City cityId;
 
     @JoinColumn(name = "countryId", referencedColumnName = "id")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Country countryId;
 
     @JoinColumn(name = "countyId", referencedColumnName = "id")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private County countyId;
 
     @JoinColumn(name = "edificationTypeId", referencedColumnName = "id")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private EdificationType edificationTypeId;
 
     @JoinColumn(name = "streetTypeId", referencedColumnName = "id")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private StreetType streetTypeId;
 
     public Address() {

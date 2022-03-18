@@ -11,6 +11,7 @@ import com.alodiga.wallet.common.utils.QueryConstants;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -54,7 +55,7 @@ public class DocumentsPersonType extends AbstractWalletEntity implements Seriali
     private String codeIdentification;
 
     @JoinColumn(name = "personTypeId", referencedColumnName = "id")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private PersonType personTypeId;
 
     public DocumentsPersonType() {

@@ -12,24 +12,24 @@ import javax.persistence.Table;
 
 import com.alodiga.wallet.common.exception.TableNotFoundException;
 import com.alodiga.wallet.common.genericEJB.AbstractWalletEntity;
-import com.alodiga.wallet.common.model.Language;
-import com.alodiga.wallet.common.model.Profile;
-
 
 @Entity
 @Table(name = "profile_data")
 public class ProfileData extends AbstractWalletEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String alias;
     private String description;
+
     //bi-directional many-to-one association to Language
     @ManyToOne
     @JoinColumn(name = "languageId")
     private Language language;
+
     @ManyToOne(cascade = {CascadeType.PERSIST})
     @JoinColumn(name = "profileId")
     private Profile profile;
@@ -81,7 +81,7 @@ public class ProfileData extends AbstractWalletEntity implements Serializable {
     public String toString() {
         return super.toString();
     }
-    
+
     @Override
     public Object getPk() {
         return getId();

@@ -1,14 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.alodiga.wallet.common.model;
 
 import java.io.Serializable;
-import java.util.Collection;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,12 +8,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
-import org.codehaus.jackson.annotate.JsonIgnore;
 
 import com.alodiga.wallet.common.exception.TableNotFoundException;
 import com.alodiga.wallet.common.genericEJB.AbstractWalletEntity;
@@ -36,20 +25,22 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "maw_address_type")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "AddressType.findAll", query = "SELECT a FROM AddressType a")
-    , @NamedQuery(name = "AddressType.findById", query = "SELECT a FROM AddressType a WHERE a.id = :id")
-    , @NamedQuery(name = "AddressType.findByDescription", query = "SELECT a FROM AddressType a WHERE a.description = :description")})
+    @NamedQuery(name = "AddressType.findAll", query = "SELECT a FROM AddressType a"),
+    @NamedQuery(name = "AddressType.findById", query = "SELECT a FROM AddressType a WHERE a.id = :id"),
+    @NamedQuery(name = "AddressType.findByDescription", query = "SELECT a FROM AddressType a WHERE a.description = :description")})
 public class AddressType extends AbstractWalletEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+
     @Size(max = 50)
     @Column(name = "description")
     private String description;
+
     @Size(max = 10)
     @Column(name = "code")
     private String code;
@@ -109,7 +100,7 @@ public class AddressType extends AbstractWalletEntity implements Serializable {
     public void setCode(String code) {
         this.code = code;
     }
-    
+
     @Override
     public Object getPk() {
         return getId();
@@ -119,5 +110,5 @@ public class AddressType extends AbstractWalletEntity implements Serializable {
     public String getTableName() throws TableNotFoundException {
         return super.getTableName(this.getClass());
     }
-    
+
 }

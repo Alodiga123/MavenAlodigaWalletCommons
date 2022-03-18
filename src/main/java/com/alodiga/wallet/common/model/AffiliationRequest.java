@@ -7,7 +7,6 @@ package com.alodiga.wallet.common.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,6 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import com.alodiga.wallet.common.exception.TableNotFoundException;
 import com.alodiga.wallet.common.genericEJB.AbstractWalletEntity;
 import com.alodiga.wallet.common.utils.QueryConstants;
+import javax.persistence.FetchType;
 
 /**
  *
@@ -62,19 +62,19 @@ public class AffiliationRequest extends AbstractWalletEntity implements Serializ
     private Date dateRequest;
 
     @JoinColumn(name = "businessPersonId", referencedColumnName = "id")
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private Person businessPersonId;
 
     @JoinColumn(name = "userRegisterUnifiedId", referencedColumnName = "id")
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private Person userRegisterUnifiedId;
 
     @JoinColumn(name = "statusRequestId", referencedColumnName = "id")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private StatusRequest statusRequestId;
 
     @JoinColumn(name = "requestTypeId", referencedColumnName = "id")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private RequestType requestTypeId;
 
     @Column(name = "createDate")
@@ -85,13 +85,13 @@ public class AffiliationRequest extends AbstractWalletEntity implements Serializ
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateDate;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "affiliationRequestId")
+    @OneToOne(mappedBy = "affiliationRequestId", fetch = FetchType.LAZY)
     private ReviewAffiliationRequest reviewAffiliationRequest;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "affiliationRequestId")
+    @OneToOne(mappedBy = "affiliationRequestId", fetch = FetchType.LAZY)
     private RequestHasCollectionRequest requestHasCollectionRequest;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "affiliationRequestId")
+    @OneToOne(mappedBy = "affiliationRequestId", fetch = FetchType.LAZY)
     private ReviewOfac reviewOfac;
 
     public AffiliationRequest() {

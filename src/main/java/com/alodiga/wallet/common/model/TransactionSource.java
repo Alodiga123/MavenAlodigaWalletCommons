@@ -1,12 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.alodiga.wallet.common.model;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,12 +12,7 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import com.alodiga.wallet.common.exception.TableNotFoundException;
 import com.alodiga.wallet.common.genericEJB.AbstractWalletEntity;
-import java.util.Collection;
-import javax.persistence.CascadeType;
-import javax.persistence.OneToMany;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlTransient;
-import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
@@ -39,18 +28,18 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 public class TransactionSource extends AbstractWalletEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @Basic(optional = false)
+
     @Column(name = "name")
     private String name;
+
     @Size(min = 1, max = 10)
     @Column(name = "code")
     private String code;
-
 
     public TransactionSource() {
     }
@@ -112,7 +101,7 @@ public class TransactionSource extends AbstractWalletEntity implements Serializa
     public String toString() {
         return "dto.TransactionSource[ id=" + id + " ]";
     }
-    
+
     @Override
     public Object getPk() {
         return getId();

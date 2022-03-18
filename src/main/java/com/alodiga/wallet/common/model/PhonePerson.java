@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.alodiga.wallet.common.model;
 
 import com.alodiga.wallet.common.exception.TableNotFoundException;
@@ -10,9 +5,10 @@ import com.alodiga.wallet.common.genericEJB.AbstractWalletEntity;
 import com.alodiga.wallet.common.utils.QueryConstants;
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -84,15 +80,15 @@ public class PhonePerson extends AbstractWalletEntity implements Serializable {
     private Date updateDate;
 
     @JoinColumn(name = "personId", referencedColumnName = "id")
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private Person personId;
     
     @JoinColumn(name = "countryId", referencedColumnName = "id")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Country countryId;
     
     @JoinColumn(name = "phoneTypeId", referencedColumnName = "id")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private PhoneType phoneTypeId;
 
     public PhonePerson() {

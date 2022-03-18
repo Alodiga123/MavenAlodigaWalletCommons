@@ -1,13 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.alodiga.wallet.common.model;
 
 import java.io.Serializable;
 import java.util.Collection;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,6 +19,7 @@ import javax.xml.bind.annotation.XmlTransient;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import com.alodiga.wallet.common.exception.TableNotFoundException;
 import com.alodiga.wallet.common.genericEJB.AbstractWalletEntity;
+import javax.persistence.FetchType;
 import javax.xml.bind.annotation.XmlType;
 
 /**
@@ -52,11 +47,11 @@ public class CivilStatus extends AbstractWalletEntity implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "civilStatusId")
+    @OneToMany(mappedBy = "civilStatusId", fetch = FetchType.LAZY)
     private Collection<NaturalPerson> naturalPersonCollection;
 
     @JoinColumn(name = "languageId", referencedColumnName = "id")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Language languageId;
 
     public CivilStatus() {

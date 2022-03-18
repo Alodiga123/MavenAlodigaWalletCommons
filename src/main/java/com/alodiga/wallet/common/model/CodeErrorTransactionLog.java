@@ -1,12 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.alodiga.wallet.common.model;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,21 +20,23 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "code_error_transaction_log")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "CodeErrorTransactionLog.findAll", query = "SELECT c FROM CodeErrorTransactionLog c")
-    , @NamedQuery(name = "CodeErrorTransactionLog.findById", query = "SELECT c FROM CodeErrorTransactionLog c WHERE c.id = :id")
-    , @NamedQuery(name = "CodeErrorTransactionLog.findByDescription", query = "SELECT c FROM CodeErrorTransactionLog c WHERE c.description = :description")
-    , @NamedQuery(name = "CodeErrorTransactionLog.findByCode", query = "SELECT c FROM CodeErrorTransactionLog c WHERE c.code = :code")})
+    @NamedQuery(name = "CodeErrorTransactionLog.findAll", query = "SELECT c FROM CodeErrorTransactionLog c"),
+    @NamedQuery(name = "CodeErrorTransactionLog.findById", query = "SELECT c FROM CodeErrorTransactionLog c WHERE c.id = :id"),
+    @NamedQuery(name = "CodeErrorTransactionLog.findByDescription", query = "SELECT c FROM CodeErrorTransactionLog c WHERE c.description = :description"),
+    @NamedQuery(name = "CodeErrorTransactionLog.findByCode", query = "SELECT c FROM CodeErrorTransactionLog c WHERE c.code = :code")})
 public class CodeErrorTransactionLog implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+
     @Size(max = 50)
     @Column(name = "description")
     private String description;
+
     @Size(max = 50)
     @Column(name = "code")
     private String code;
@@ -100,5 +96,5 @@ public class CodeErrorTransactionLog implements Serializable {
     public String toString() {
         return "com.alodiga.wallet.common.model.CodeErrorTransactionLog[ id=" + id + " ]";
     }
-    
+
 }

@@ -13,6 +13,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -46,11 +47,11 @@ public class PersonHasAddress extends AbstractWalletEntity implements Serializab
     private Integer id;
 
     @JoinColumn(name = "addressId", referencedColumnName = "id")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Address addressId;
 
     @JoinColumn(name = "personId", referencedColumnName = "id")
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private Person personId;
 
     @Column(name = "createDate")

@@ -1,15 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.alodiga.wallet.common.model;
 
 import java.io.Serializable;
-import java.util.Collection;
-
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,10 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 import com.alodiga.wallet.common.exception.TableNotFoundException;
 import com.alodiga.wallet.common.genericEJB.AbstractWalletEntity;
@@ -38,17 +27,17 @@ import com.alodiga.wallet.common.genericEJB.AbstractWalletEntity;
     @NamedQuery(name = "PreferenceClassification.findByName", query = "SELECT p FROM PreferenceClassification p WHERE p.name = :name"),
     @NamedQuery(name = "PreferenceClassification.findByEnabled", query = "SELECT p FROM PreferenceClassification p WHERE p.enabled = :enabled"),})
 public class PreferenceClassification extends AbstractWalletEntity implements Serializable {
-    
+
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @Basic(optional = false)
+
     @Column(name = "name")
     private String name;
-    @Basic(optional = false)
+
     @Column(name = "enabled")
     private boolean enabled;
 
@@ -96,8 +85,7 @@ public class PreferenceClassification extends AbstractWalletEntity implements Se
         return hash;
     }
 
-
-	@Override
+    @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof PreferenceClassification)) {
@@ -124,5 +112,5 @@ public class PreferenceClassification extends AbstractWalletEntity implements Se
     public String getTableName() throws TableNotFoundException {
         return super.getTableName(this.getClass());
     }
-    
+
 }

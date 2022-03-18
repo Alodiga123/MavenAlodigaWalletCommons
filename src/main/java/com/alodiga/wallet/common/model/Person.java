@@ -6,9 +6,9 @@ import com.alodiga.wallet.common.utils.QueryConstants;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,76 +34,77 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @Table(name = "person")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Person.findAll", query = "SELECT p FROM Person p")
-    , @NamedQuery(name = "Person.findById", query = "SELECT p FROM Person p WHERE p.id = :id")
-    , @NamedQuery(name = "Person.findByEmail", query = "SELECT p FROM Person p WHERE p.email = :email")
-    , @NamedQuery(name = "Person.findByWebSite", query = "SELECT p FROM Person p WHERE p.webSite = :webSite")
-    , @NamedQuery(name = "Person.findByCreateDate", query = "SELECT p FROM Person p WHERE p.createDate = :createDate")
-    , @NamedQuery(name = "Person.findByUpdateDate", query = "SELECT p FROM Person p WHERE p.updateDate = :updateDate")
-    , @NamedQuery(name = QueryConstants.PERSON_CLASSIFICATION_BY_ID, query = "SELECT p FROM Person p WHERE p.personClassificationId.id = :personClassificationId")})
+    @NamedQuery(name = "Person.findAll", query = "SELECT p FROM Person p"),
+    @NamedQuery(name = "Person.findById", query = "SELECT p FROM Person p WHERE p.id = :id"),
+    @NamedQuery(name = "Person.findByEmail", query = "SELECT p FROM Person p WHERE p.email = :email"),
+    @NamedQuery(name = "Person.findByWebSite", query = "SELECT p FROM Person p WHERE p.webSite = :webSite"),
+    @NamedQuery(name = "Person.findByCreateDate", query = "SELECT p FROM Person p WHERE p.createDate = :createDate"),
+    @NamedQuery(name = "Person.findByUpdateDate", query = "SELECT p FROM Person p WHERE p.updateDate = :updateDate"),
+    @NamedQuery(name = QueryConstants.PERSON_CLASSIFICATION_BY_ID, query = "SELECT p FROM Person p WHERE p.personClassificationId.id = :personClassificationId")})
 public class Person extends AbstractWalletEntity implements Serializable {
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "personId")
+    @OneToOne(mappedBy = "personId")
     private Employee employee;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personId")
+
+    @OneToMany(mappedBy = "personId")
     private Collection<User> userCollection;
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-    
+
     @Size(max = 50)
     @Column(name = "email")
     private String email;
-    
+
     @Size(max = 50)
     @Column(name = "webSite")
     private String webSite;
-    
+
     @Column(name = "createDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createDate;
-    
+
     @Column(name = "updateDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateDate;
-    
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "personId")
+
+    @OneToOne(mappedBy = "personId", fetch = FetchType.LAZY)
     private NaturalPerson naturalPerson;
-    
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "personId")
+
+    @OneToOne(mappedBy = "personId", fetch = FetchType.LAZY)
     private PhonePerson phonePerson;
-    
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "personId")
+
+    @OneToOne(mappedBy = "personId", fetch = FetchType.LAZY)
     private LegalPerson legalPerson;
-    
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "personId")
+
+    @OneToOne(mappedBy = "personId", fetch = FetchType.LAZY)
     private LegalRepresentative legalRepresentative;
-    
+
     @JoinColumn(name = "countryId", referencedColumnName = "id")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Country countryId;
-    
+
     @JoinColumn(name = "personClassificationId", referencedColumnName = "id")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private PersonClassification personClassificationId;
-    
+
     @JoinColumn(name = "personTypeId", referencedColumnName = "id")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private PersonType personTypeId;
-    
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "businessPersonId")
+
+    @OneToOne(mappedBy = "businessPersonId", fetch = FetchType.LAZY)
     private AffiliationRequest affiliationRequest;
-    
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "personId")
+
+    @OneToOne(mappedBy = "personId", fetch = FetchType.LAZY)
     private ReviewOfac reviewOfac;
-    
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "personId")
+
+    @OneToOne(mappedBy = "personId", fetch = FetchType.LAZY)
     private PersonHasAddress personHasAddress;
-    
+
     public Person() {
     }
 
@@ -255,7 +256,6 @@ public class Person extends AbstractWalletEntity implements Serializable {
     public void setReviewOfac(ReviewOfac reviewOfac) {
         this.reviewOfac = reviewOfac;
     }
-    
 
     @Override
     public Object getPk() {

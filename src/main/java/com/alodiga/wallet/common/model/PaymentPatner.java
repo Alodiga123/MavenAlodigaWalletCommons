@@ -1,14 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.alodiga.wallet.common.model;
 
 import java.io.Serializable;
 import java.util.Collection;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,9 +18,6 @@ import javax.xml.bind.annotation.XmlTransient;
 
 import com.alodiga.wallet.common.exception.TableNotFoundException;
 import com.alodiga.wallet.common.genericEJB.AbstractWalletEntity;
-import com.alodiga.wallet.common.model.PaymentInfo;
-import com.alodiga.wallet.common.model.PaymentIntegrationType;
-import com.alodiga.wallet.common.model.PaymentPatner;
 
 /**
  *
@@ -48,37 +38,43 @@ import com.alodiga.wallet.common.model.PaymentPatner;
     @NamedQuery(name = "PaymentPatner.findByTestMode", query = "SELECT p FROM PaymentPatner p WHERE p.testMode = :testMode"),
     @NamedQuery(name = "PaymentPatner.findByEnabled", query = "SELECT p FROM PaymentPatner p WHERE p.enabled = :enabled")})
 public class PaymentPatner extends AbstractWalletEntity implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @Basic(optional = false)
+
     @Column(name = "name")
     private String name;
+
     @Column(name = "urlSubmit")
     private String urlSubmit;
+
     @Column(name = "paymentUser")
     private String paymentUser;
+
     @Column(name = "encriptionKey")
     private String encriptionKey;
+
     @Column(name = "urlResponse")
     private String urlResponse;
+
     @Column(name = "urlConfirmation")
     private String urlConfirmation;
-    @Basic(optional = false)
+
     @Column(name = "testMode")
     private boolean testMode;
-    @Basic(optional = false)
+
     @Column(name = "enabled")
     private boolean enabled;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "paymentPatnerId")
+
+    @OneToMany(mappedBy = "paymentPatnerId")
     private Collection<PaymentInfo> paymentInfoCollection;
+
     @JoinColumn(name = "integrationTypeId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private PaymentIntegrationType integrationTypeId;
 
     public PaymentPatner() {
@@ -166,8 +162,6 @@ public class PaymentPatner extends AbstractWalletEntity implements Serializable 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
-    
-    
 
     @XmlTransient
     public Collection<PaymentInfo> getPaymentInfoCollection() {
@@ -210,7 +204,7 @@ public class PaymentPatner extends AbstractWalletEntity implements Serializable 
     public String toString() {
         return "dto.PaymentPatner[ id=" + id + " ]";
     }
-    
+
     @Override
     public Object getPk() {
         return getId();

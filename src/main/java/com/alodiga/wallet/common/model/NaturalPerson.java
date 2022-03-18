@@ -13,6 +13,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -104,23 +105,23 @@ public class NaturalPerson extends AbstractWalletEntity implements Serializable 
     private Date updateDate;
     
     @JoinColumn(name = "civilStatusId", referencedColumnName = "id")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private CivilStatus civilStatusId;
     
     @JoinColumn(name = "documentsPersonTypeId", referencedColumnName = "id")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private DocumentsPersonType documentsPersonTypeId;
     
     @JoinColumn(name = "personId", referencedColumnName = "id")
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private Person personId;
     
     @JoinColumn(name = "professionId", referencedColumnName = "id")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Profession professionId;
     
     @JoinColumn(name = "statusApplicantId", referencedColumnName = "id")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private StatusApplicant statusApplicantId;
 
     public NaturalPerson() {

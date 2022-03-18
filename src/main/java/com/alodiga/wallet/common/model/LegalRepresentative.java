@@ -12,6 +12,7 @@ import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -94,23 +95,23 @@ public class LegalRepresentative extends AbstractWalletEntity implements Seriali
     @Temporal(TemporalType.DATE)
     private Date dateBirth;
 
-    @OneToMany(mappedBy = "legalRepresentativeId")
+    @OneToMany(mappedBy = "legalRepresentativeId", fetch = FetchType.LAZY)
     private Collection<LegalPerson> legalPersonCollection;
 
     @JoinColumn(name = "documentsPersonTypeId", referencedColumnName = "id")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private DocumentsPersonType documentsPersonTypeId;
 
     @JoinColumn(name = "personId", referencedColumnName = "id")
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private Person personId;
 
     @JoinColumn(name = "civilStatusId", referencedColumnName = "id")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private CivilStatus civilStatusId;
 
     @JoinColumn(name = "statusApplicantId", referencedColumnName = "id")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private StatusApplicant statusApplicantId;
 
     @Column(name = "createDate")
