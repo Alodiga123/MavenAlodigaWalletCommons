@@ -26,6 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import com.alodiga.wallet.common.exception.TableNotFoundException;
 import com.alodiga.wallet.common.genericEJB.AbstractWalletEntity;
 import com.alodiga.wallet.common.utils.QueryConstants;
+import javax.persistence.FetchType;
 
 /**
  *
@@ -50,30 +51,37 @@ import com.alodiga.wallet.common.utils.QueryConstants;
 public class RequestHasCollectionRequest extends AbstractWalletEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id")
     private Long id;
+
     @Column(name = "createDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createDate;
+
     @Column(name = "updateDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateDate;
+
     @Size(max = 250)
     @Column(name = "imageFileUrl")
     private String imageFileUrl;
+
     @Size(max = 1000)
     @Column(name = "observations")
     private String observations;
+
     @Column(name = "indApproved")
     private Boolean indApproved;
+
     @JoinColumn(name = "affiliationRequestId", referencedColumnName = "id")
-    @OneToOne(optional = false)
+    @OneToOne(fetch = FetchType.LAZY)
     private AffiliationRequest affiliationRequestId;
+    
     @JoinColumn(name = "collectionsRequestId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     private CollectionsRequest collectionsRequestId;
 
     public RequestHasCollectionRequest() {
