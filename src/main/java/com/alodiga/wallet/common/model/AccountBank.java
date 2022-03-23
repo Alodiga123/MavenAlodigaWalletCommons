@@ -46,7 +46,8 @@ import com.alodiga.wallet.common.utils.QueryConstants;
     , @NamedQuery(name = "AccountBank.findByUnifiedRegistryIdByAccountNumberByBankIdByStatusAccountId", query = "SELECT a FROM AccountBank a WHERE a.unifiedRegistryId = :unifiedRegistryId AND a.accountNumber = :accountNumber AND a.bankId.id = :bankId AND a.statusAccountBankId.id = 1")
     , @NamedQuery(name = "AccountBank.findByAccountNumber", query = "SELECT a FROM AccountBank a WHERE a.accountNumber = :accountNumber")
     , @NamedQuery(name = "AccountBank.findByUpdateDate", query = "SELECT a FROM AccountBank a WHERE a.updateDate = :updateDate")
-    , @NamedQuery(name = "AccountBank.findByCreateDate", query = "SELECT a FROM AccountBank a WHERE a.createDate = :createDate")})
+    , @NamedQuery(name = "AccountBank.findByCreateDate", query = "SELECT a FROM AccountBank a WHERE a.createDate = :createDate")
+    , @NamedQuery(name = "AccountBank.accountBankByBankByUser", query = "SELECT a FROM AccountBank a WHERE a.bankId.id = :bankId AND a.unifiedRegistryId = :unifiedRegistryId")})
 
 public class AccountBank extends AbstractWalletEntity implements Serializable {
 
