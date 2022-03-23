@@ -1,11 +1,7 @@
 package com.alodiga.wallet.common.model;
 
-
 import com.alodiga.wallet.common.exception.TableNotFoundException;
 import com.alodiga.wallet.common.genericEJB.AbstractWalletEntity;
-import com.alodiga.wallet.common.model.Event;
-import com.alodiga.wallet.common.model.Permission;
-import com.alodiga.wallet.common.model.User;
 import com.alodiga.wallet.common.utils.QueryConstants;
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -30,13 +26,18 @@ import javax.persistence.Table;
 public class Audit extends AbstractWalletEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private Timestamp creationDate;
+
     private String extra;
+
     @Lob()
     private String newValues;
+
     @Lob()
     private String originalValues;
 
@@ -44,12 +45,15 @@ public class Audit extends AbstractWalletEntity implements Serializable {
     private String responsibleType;
     private String tableName;
     //bi-directional many-to-one association to Event
+
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "eventId")
     private Event event;
+
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "userId")
     private User user;
+
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "permissionId")
     private Permission permission;
@@ -145,7 +149,7 @@ public class Audit extends AbstractWalletEntity implements Serializable {
     public String toString() {
         return super.toString();
     }
-    
+
     @Override
     public Object getPk() {
         return getId();

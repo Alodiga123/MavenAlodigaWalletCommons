@@ -6,9 +6,6 @@
 package com.alodiga.wallet.common.model;
 
 import java.io.Serializable;
-import java.util.Collection;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,11 +13,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
-import org.codehaus.jackson.annotate.JsonIgnore;
 import com.alodiga.wallet.common.exception.TableNotFoundException;
 import com.alodiga.wallet.common.genericEJB.AbstractWalletEntity;
 import com.alodiga.wallet.common.utils.QueryConstants;
@@ -49,24 +43,30 @@ import javax.xml.bind.annotation.XmlType;
 public class Country extends AbstractWalletEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @Basic(optional = false)
+
     @Column(name = "name")
     private String name;
+
     @Column(name = "shortName")
     private String shortName;
+
     @Column(name = "code")
     private String code;
+
     @Column(name = "code_iso3")
     private String code_iso3;
+
     @Column(name = "alternativeName1")
     private String alternativeName1;
+
     @Column(name = "alternativeName2")
     private String alternativeName2;
+
     @Column(name = "alternativeName3")
     private String alternativeName3;
 
@@ -170,7 +170,7 @@ public class Country extends AbstractWalletEntity implements Serializable {
     public String toString() {
         return "dto.Country[ id=" + id + " ]";
     }
-    
+
     @Override
     public Object getPk() {
         return getId();

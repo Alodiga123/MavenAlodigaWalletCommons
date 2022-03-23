@@ -1,15 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.alodiga.wallet.common.model;
 
 import com.alodiga.wallet.common.exception.TableNotFoundException;
 import com.alodiga.wallet.common.genericEJB.AbstractWalletEntity;
 import com.alodiga.wallet.common.utils.QueryConstants;
 import java.io.Serializable;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -39,21 +33,24 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class CollectionsRequest extends AbstractWalletEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+
     @JoinColumn(name = "collectionTypeId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private CollectionType collectionTypeId;
+
     @JoinColumn(name = "personTypeId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private PersonType personTypeId;
+
     @JoinColumn(name = "requestTypeId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private RequestType requestTypeId;
-    @Basic(optional = false)
+
     @Column(name = "enabled")
     private boolean enabled;
 
@@ -95,7 +92,7 @@ public class CollectionsRequest extends AbstractWalletEntity implements Serializ
     public void setRequestTypeId(RequestType requestTypeId) {
         this.requestTypeId = requestTypeId;
     }
-    
+
     public boolean getEnabled() {
         return this.enabled;
     }

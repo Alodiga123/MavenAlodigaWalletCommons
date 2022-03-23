@@ -1,14 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.alodiga.wallet.common.model;
 
 import java.io.Serializable;
 import java.util.Collection;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,12 +16,6 @@ import javax.xml.bind.annotation.XmlTransient;
 
 import com.alodiga.wallet.common.exception.TableNotFoundException;
 import com.alodiga.wallet.common.genericEJB.AbstractWalletEntity;
-import com.alodiga.wallet.common.model.CategoryData;
-import com.alodiga.wallet.common.model.Language;
-import com.alodiga.wallet.common.model.ProductData;
-import com.alodiga.wallet.common.model.PromotionData;
-import com.alodiga.wallet.common.model.PromotionNotification;
-import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
@@ -49,26 +36,31 @@ public class Language extends AbstractWalletEntity implements Serializable {
     public static final Long SPANISH = 2L;
     public static final Long PORTUGUESE = 3L;
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @Basic(optional = false)
+
     @Column(name = "iso")
     private String iso;
+
     @Column(name = "description")
     private String description;
-    @Basic(optional = false)
+
     @Column(name = "enabled")
     private boolean enabled;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "languageId")
+
+    @OneToMany(mappedBy = "languageId")
     private Collection<CategoryData> categoryDataCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "languageId")
+
+    @OneToMany(mappedBy = "languageId")
     private Collection<PromotionData> promotionDataCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "languageId")
+
+    @OneToMany(mappedBy = "languageId")
     private Collection<ProductData> productDataCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "languageId")
+
+    @OneToMany(mappedBy = "languageId")
     private Collection<PromotionNotification> promotionNotificationCollection;
 
     public Language() {
@@ -176,7 +168,7 @@ public class Language extends AbstractWalletEntity implements Serializable {
     public String toString() {
         return "dto.Language[ id=" + id + " ]";
     }
-    
+
     @Override
     public Object getPk() {
         return getId();

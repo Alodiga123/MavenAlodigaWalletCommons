@@ -1,14 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.alodiga.wallet.common.model;
 
 import java.io.Serializable;
-import java.util.Collection;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,17 +8,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 import com.alodiga.wallet.common.exception.TableNotFoundException;
 import com.alodiga.wallet.common.genericEJB.AbstractWalletEntity;
-import com.alodiga.wallet.common.model.Category;
-import com.alodiga.wallet.common.model.CategoryData;
-import com.alodiga.wallet.common.model.Product;
-import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
@@ -43,15 +29,15 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 public class Category extends AbstractWalletEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @Basic(optional = false)
+
     @Column(name = "name")
     private String name;
-    @Basic(optional = false)
+
     @Column(name = "enabled")
     private boolean enabled;
 
@@ -92,7 +78,6 @@ public class Category extends AbstractWalletEntity implements Serializable {
         this.enabled = enabled;
     }
 
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -117,7 +102,7 @@ public class Category extends AbstractWalletEntity implements Serializable {
     public String toString() {
         return "dto.Category[ id=" + id + " ]";
     }
-    
+
     @Override
     public Object getPk() {
         return getId();

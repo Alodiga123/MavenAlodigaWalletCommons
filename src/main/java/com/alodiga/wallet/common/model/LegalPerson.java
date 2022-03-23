@@ -52,51 +52,61 @@ import javax.xml.bind.annotation.XmlType;
 public class LegalPerson extends AbstractWalletEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id")
     private Long id;
+
     @Column(name = "createDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createDate;
+
     @Column(name = "updateDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateDate;
-    @Basic(optional = false)
+
     @Size(min = 1, max = 40)
     @Column(name = "identificationNumber")
     private String identificationNumber;
+
     @Size(max = 60)
     @Column(name = "tradeName")
     private String tradeName;
-    @Basic(optional = false)
+
     @Size(min = 1, max = 80)
     @Column(name = "businessName")
     private String businessName;
+
     @Size(max = 45)
     @Column(name = "registerNumber")
     private String registerNumber;
+
     @Column(name = "dateInscriptionRegister")
     @Temporal(TemporalType.DATE)
     private Date dateInscriptionRegister;
+
     @JoinColumn(name = "businessCategoryId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private BusinessCategory businessCategoryId;
+    
     @JoinColumn(name = "documentsPersonTypeId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private DocumentsPersonType documentsPersonTypeId;
+    
     @JoinColumn(name = "personId", referencedColumnName = "id")
-    @OneToOne(optional = false)
+    @OneToOne
     private Person personId;
+    
     @JoinColumn(name = "legalRepresentativeId", referencedColumnName = "id")
     @ManyToOne
     private LegalRepresentative legalRepresentativeId;
-    @Basic(optional = false)
+    
     @Column(name = "payedCapital")
     private float payedCapital;
+    
     @JoinColumn(name = "statusApplicantId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private StatusApplicant statusApplicantId;
 
     public LegalPerson() {

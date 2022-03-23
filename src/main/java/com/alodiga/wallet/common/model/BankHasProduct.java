@@ -6,7 +6,6 @@
 package com.alodiga.wallet.common.model;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,25 +29,27 @@ import javax.persistence.ManyToOne;
 @Table(name = "bank_has_product")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "BankHasProduct.findAll", query = "SELECT b FROM BankHasProduct b")
-    , @NamedQuery(name = "BankHasProduct.findById", query = "SELECT b FROM BankHasProduct b WHERE b.id = :id")
-    , @NamedQuery(name = "BankHasProduct.findByProductId", query = "SELECT b FROM BankHasProduct b WHERE b.productId.id = :productId")
-    , @NamedQuery(name = "BankHasProduct.findByProductIdAndBankId", query = "SELECT b FROM BankHasProduct b WHERE b.productId.id = :productId AND b.bankId.id = :bankId")
-    , @NamedQuery(name = "BankHasProduct.findByBankId", query = "SELECT b FROM BankHasProduct b WHERE b.bankId.id = :bankId")
-    , @NamedQuery(name = QueryConstants.BANK_BY_PRODUCT, query = "SELECT b FROM BankHasProduct b WHERE b.productId.id = :productId")})
+    @NamedQuery(name = "BankHasProduct.findAll", query = "SELECT b FROM BankHasProduct b"),
+    @NamedQuery(name = "BankHasProduct.findById", query = "SELECT b FROM BankHasProduct b WHERE b.id = :id"),
+    @NamedQuery(name = "BankHasProduct.findByProductId", query = "SELECT b FROM BankHasProduct b WHERE b.productId.id = :productId"),
+    @NamedQuery(name = "BankHasProduct.findByProductIdAndBankId", query = "SELECT b FROM BankHasProduct b WHERE b.productId.id = :productId AND b.bankId.id = :bankId"),
+    @NamedQuery(name = "BankHasProduct.findByBankId", query = "SELECT b FROM BankHasProduct b WHERE b.bankId.id = :bankId"),
+    @NamedQuery(name = QueryConstants.BANK_BY_PRODUCT, query = "SELECT b FROM BankHasProduct b WHERE b.productId.id = :productId")})
 public class BankHasProduct extends AbstractWalletEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id")
     private Long id;
+
     @JoinColumn(name = "productId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Product productId;
+
     @JoinColumn(name = "bankId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Bank bankId;
 
     public BankHasProduct() {
@@ -112,7 +113,7 @@ public class BankHasProduct extends AbstractWalletEntity implements Serializable
     public String toString() {
         return "com.alodiga.wallet.model.BankHasProduct[ id=" + id + " ]";
     }
-    
+
     @Override
     public Object getPk() {
         return getId();

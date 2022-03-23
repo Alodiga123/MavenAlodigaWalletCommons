@@ -3,7 +3,6 @@ package com.alodiga.wallet.common.model;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -15,15 +14,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import com.alodiga.wallet.common.exception.TableNotFoundException;
 import com.alodiga.wallet.common.genericEJB.AbstractWalletEntity;
-import com.alodiga.wallet.common.model.PermissionHasProfile;
-import com.alodiga.wallet.common.model.ProfileData;
-import java.util.Collection;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlTransient;
-import org.codehaus.jackson.annotate.JsonIgnore;
-
 
 @Entity
 @Table(name = "profile")
@@ -34,29 +26,30 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 public class Profile extends AbstractWalletEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @Basic(optional = false)
+
     @Size(min = 1, max = 45)
     @Column(name = "name")
     private String name;
-    @Basic(optional = false)
+
     @Column(name = "enabled")
     private boolean enabled;
-    @OneToMany(mappedBy = "profile", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST})
+
+    @OneToMany(mappedBy = "profile", fetch = FetchType.EAGER)
     private List<PermissionHasProfile> permissionHasProfiles;
-    @OneToMany(mappedBy = "profile", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy = "profile", fetch = FetchType.EAGER)
     private List<ProfileData> profileData;
-    
+
     public static Long ADMINISTRATOR = 1L;
     public static Long DISTRIBUTOR = 2L;
 
     public Profile() {
     }
-    
+
     public Profile(Long id) {
         this.id = id;
     }
@@ -117,8 +110,8 @@ public class Profile extends AbstractWalletEntity implements Serializable {
         }
         return pd;
     }
-    
-    public String getNaturalField(Object o,Object o2){
+
+    public String getNaturalField(Object o, Object o2) {
         StringBuilder sb = new StringBuilder();
         Class<?> thisClass = o.getClass();
         Class<?> thisClass2 = o2.getClass();
@@ -126,21 +119,22 @@ public class Profile extends AbstractWalletEntity implements Serializable {
             Field[] aClassFields = thisClass.getDeclaredFields();
             Field[] aClassFields2 = thisClass2.getDeclaredFields();
             sb.append("[");
-            for(Field f : aClassFields){
-                for(Field f2 : aClassFields2){
-                  if(f.get(o) !=  f.get(o2)){
-                       sb.append(f.getName()).append("=");
-    //                   sb.append(f.get(o)).append("|");
-                       sb.append(f.get(o2)).append(",");
-                       break;
-                  }
+            for (Field f : aClassFields) {
+                for (Field f2 : aClassFields2) {
+                    if (f.get(o) != f.get(o2)) {
+                        sb.append(f.getName()).append("=");
+                        //                   sb.append(f.get(o)).append("|");
+                        sb.append(f.get(o2)).append(",");
+                        break;
+                    }
                 }
-            }  sb.append("]");
+            }
+            sb.append("]");
         } catch (SecurityException e) {
             e.printStackTrace();
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
-        }catch (IllegalAccessException e) {
+        } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
         return sb.toString();
@@ -155,7 +149,7 @@ public class Profile extends AbstractWalletEntity implements Serializable {
     public String getTableName() throws TableNotFoundException {
         return super.getTableName(this.getClass());
     }
-    
+
     @Override
     public String toString() {
         return super.toString();

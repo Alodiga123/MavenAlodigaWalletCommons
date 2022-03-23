@@ -8,7 +8,6 @@ package com.alodiga.wallet.common.model;
 import com.alodiga.wallet.common.exception.TableNotFoundException;
 import com.alodiga.wallet.common.genericEJB.AbstractWalletEntity;
 import java.io.Serializable;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -37,16 +36,16 @@ import javax.xml.bind.annotation.XmlType;
 public class StatusApplicant extends AbstractWalletEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
+
     @Size(min = 1, max = 50)
     @Column(name = "description")
     private String description;
-    @Basic(optional = false)
+
     @Size(min = 1, max = 10)
     @Column(name = "code")
     private String code;

@@ -1,21 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.alodiga.wallet.common.model;
 
 import java.io.Serializable;
 
 import com.alodiga.wallet.common.exception.TableNotFoundException;
 import com.alodiga.wallet.common.genericEJB.AbstractWalletEntity;
-import com.alodiga.wallet.common.model.PreferenceField;
-import com.alodiga.wallet.common.model.PreferenceType;
 import com.alodiga.wallet.common.utils.QueryConstants;
 
 import java.util.Collection;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -39,18 +30,21 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "PreferenceType.findAll", query = "SELECT p FROM PreferenceType p"),
     @NamedQuery(name = "PreferenceType.findById", query = "SELECT p FROM PreferenceType p WHERE p.id = :id"),
     @NamedQuery(name = "PreferenceType.findByType", query = "SELECT p FROM PreferenceType p WHERE p.type = :type"),
-    @NamedQuery(name = QueryConstants.PREFERENCE_TYPE_BY_TYPE, query = "SELECT p FROM PreferenceType p WHERE p.type = :type")})    
+    @NamedQuery(name = QueryConstants.PREFERENCE_TYPE_BY_TYPE, query = "SELECT p FROM PreferenceType p WHERE p.type = :type")})
 
 public class PreferenceType extends AbstractWalletEntity implements Serializable {
+
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id")
     private Long id;
+
     @Column(name = "type")
     private String type;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "preferenceTypeId")
+
+    @OneToMany(mappedBy = "preferenceTypeId")
     private Collection<PreferenceField> preferenceFieldCollection;
 
     public PreferenceType() {

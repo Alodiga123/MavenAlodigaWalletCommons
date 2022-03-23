@@ -1,15 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.alodiga.wallet.common.model;
 
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,12 +21,6 @@ import javax.xml.bind.annotation.XmlTransient;
 
 import com.alodiga.wallet.common.exception.TableNotFoundException;
 import com.alodiga.wallet.common.genericEJB.AbstractWalletEntity;
-import com.alodiga.wallet.common.model.Period;
-import com.alodiga.wallet.common.model.Product;
-import com.alodiga.wallet.common.model.Promotion;
-import com.alodiga.wallet.common.model.PromotionData;
-import com.alodiga.wallet.common.model.PromotionItem;
-import com.alodiga.wallet.common.model.TransactionType;
 
 /**
  *
@@ -56,55 +43,62 @@ import com.alodiga.wallet.common.model.TransactionType;
     @NamedQuery(name = "Promotion.findByPromotionValidityDays", query = "SELECT p FROM Promotion p WHERE p.promotionValidityDays = :promotionValidityDays"),
     @NamedQuery(name = "Promotion.findByEnabled", query = "SELECT p FROM Promotion p WHERE p.enabled = :enabled")})
 public class Promotion extends AbstractWalletEntity implements Serializable {
+
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @Basic(optional = false)
+
     @Column(name = "name")
     private String name;
-    @Basic(optional = false)
+
     @Column(name = "promotionType")
     private String promotionType;
-    @Basic(optional = false)
+
     @Column(name = "promotionalAction")
     private String promotionalAction;
-    @Basic(optional = false)
+
     @Column(name = "beginningDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date beginningDate;
-    @Basic(optional = false)
+
     @Column(name = "endingDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date endingDate;
-    @Basic(optional = false)
+
     @Column(name = "isPercentage")
     private boolean isPercentage;
+
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "goalAmount")
     private Float goalAmount;
-    @Basic(optional = false)
+
     @Column(name = "promotionalAmount")
     private float promotionalAmount;
-    @Basic(optional = false)
+
     @Column(name = "promotionValidityDays")
     private int promotionValidityDays;
-    @Basic(optional = false)
+
     @Column(name = "enabled")
     private boolean enabled;
+
     @JoinColumn(name = "transactionTypeId", referencedColumnName = "id")
     @ManyToOne
     private TransactionType transactionTypeId;
+
     @JoinColumn(name = "productId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Product productId;
+
     @JoinColumn(name = "periodId", referencedColumnName = "id")
     @ManyToOne
     private Period periodId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "promotionId")
+
+    @OneToMany(mappedBy = "promotionId")
     private Collection<PromotionData> promotionDataCollection;
+
     @OneToMany(mappedBy = "promotionId")
     private Collection<PromotionItem> promotionItemCollection;
 
@@ -282,7 +276,7 @@ public class Promotion extends AbstractWalletEntity implements Serializable {
     public String toString() {
         return "dto.Promotion[ id=" + id + " ]";
     }
-    
+
     @Override
     public Object getPk() {
         return getId();

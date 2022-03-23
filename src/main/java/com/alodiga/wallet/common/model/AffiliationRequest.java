@@ -7,8 +7,6 @@ package com.alodiga.wallet.common.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,6 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import com.alodiga.wallet.common.exception.TableNotFoundException;
 import com.alodiga.wallet.common.genericEJB.AbstractWalletEntity;
 import com.alodiga.wallet.common.utils.QueryConstants;
+import javax.persistence.FetchType;
 
 /**
  *
@@ -36,54 +35,63 @@ import com.alodiga.wallet.common.utils.QueryConstants;
 @Table(name = "affiliation_request")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "AffiliationRequest.findAll", query = "SELECT a FROM AffiliationRequest a")
-    , @NamedQuery(name = "AffiliationRequest.findById", query = "SELECT a FROM AffiliationRequest a WHERE a.id = :id")
-    , @NamedQuery(name = "AffiliationRequest.findByNumberRequest", query = "SELECT a FROM AffiliationRequest a WHERE a.numberRequest = :numberRequest")
-    , @NamedQuery(name = "AffiliationRequest.findByDateRequest", query = "SELECT a FROM AffiliationRequest a WHERE a.dateRequest = :dateRequest")
-    , @NamedQuery(name = "AffiliationRequest.findByCreateDate", query = "SELECT a FROM AffiliationRequest a WHERE a.createDate = :createDate")
-    , @NamedQuery(name = "AffiliationRequest.findByUpdateDate", query = "SELECT a FROM AffiliationRequest a WHERE a.updateDate = :updateDate")
-    , @NamedQuery(name = QueryConstants.AFFILIATION_REQUEST_BY_REQUEST_TYPE_ID, query = "SELECT a FROM AffiliationRequest a WHERE a.requestTypeId.id = :requestTypeId")
-    , @NamedQuery(name = QueryConstants.AFFILIATION_REQUEST_BY_LEGAL_PERSON, query = "SELECT a FROM AffiliationRequest a WHERE a.businessPersonId.id = :legalPersonId")
-    , @NamedQuery(name = QueryConstants.AFFILIATION_REQUEST_BY_PERSON, query = "SELECT a FROM AffiliationRequest a WHERE a.businessPersonId.id = :businessPersonId")})
-
+    @NamedQuery(name = "AffiliationRequest.findAll", query = "SELECT a FROM AffiliationRequest a"),
+    @NamedQuery(name = "AffiliationRequest.findById", query = "SELECT a FROM AffiliationRequest a WHERE a.id = :id"),
+    @NamedQuery(name = "AffiliationRequest.findByNumberRequest", query = "SELECT a FROM AffiliationRequest a WHERE a.numberRequest = :numberRequest"),
+    @NamedQuery(name = "AffiliationRequest.findByDateRequest", query = "SELECT a FROM AffiliationRequest a WHERE a.dateRequest = :dateRequest"),
+    @NamedQuery(name = "AffiliationRequest.findByCreateDate", query = "SELECT a FROM AffiliationRequest a WHERE a.createDate = :createDate"),
+    @NamedQuery(name = "AffiliationRequest.findByUpdateDate", query = "SELECT a FROM AffiliationRequest a WHERE a.updateDate = :updateDate"),
+    @NamedQuery(name = QueryConstants.AFFILIATION_REQUEST_BY_REQUEST_TYPE_ID, query = "SELECT a FROM AffiliationRequest a WHERE a.requestTypeId.id = :requestTypeId"),
+    @NamedQuery(name = QueryConstants.AFFILIATION_REQUEST_BY_LEGAL_PERSON, query = "SELECT a FROM AffiliationRequest a WHERE a.businessPersonId.id = :legalPersonId"),
+    @NamedQuery(name = QueryConstants.AFFILIATION_REQUEST_BY_PERSON, query = "SELECT a FROM AffiliationRequest a WHERE a.businessPersonId.id = :businessPersonId")})
 
 public class AffiliationRequest extends AbstractWalletEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id")
     private Long id;
+
     @Size(max = 40)
     @Column(name = "numberRequest")
     private String numberRequest;
+
     @Column(name = "dateRequest")
     @Temporal(TemporalType.DATE)
     private Date dateRequest;
+
     @JoinColumn(name = "businessPersonId", referencedColumnName = "id")
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private Person businessPersonId;
+
     @JoinColumn(name = "userRegisterUnifiedId", referencedColumnName = "id")
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private Person userRegisterUnifiedId;
+
     @JoinColumn(name = "statusRequestId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     private StatusRequest statusRequestId;
+
     @JoinColumn(name = "requestTypeId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     private RequestType requestTypeId;
+
     @Column(name = "createDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createDate;
+
     @Column(name = "updateDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateDate;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "affiliationRequestId")
+
+    @OneToOne(mappedBy = "affiliationRequestId", fetch = FetchType.LAZY)
     private ReviewAffiliationRequest reviewAffiliationRequest;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "affiliationRequestId")
+
+    @OneToOne(mappedBy = "affiliationRequestId", fetch = FetchType.LAZY)
     private RequestHasCollectionRequest requestHasCollectionRequest;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "affiliationRequestId")
+
+    @OneToOne(mappedBy = "affiliationRequestId", fetch = FetchType.LAZY)
     private ReviewOfac reviewOfac;
 
     public AffiliationRequest() {
@@ -148,8 +156,8 @@ public class AffiliationRequest extends AbstractWalletEntity implements Serializ
     public void setBusinessPersonId(Person businessPersonId) {
         this.businessPersonId = businessPersonId;
     }
-    
-        public Person getUserRegisterUnifiedId() {
+
+    public Person getUserRegisterUnifiedId() {
         return userRegisterUnifiedId;
     }
 
@@ -213,7 +221,7 @@ public class AffiliationRequest extends AbstractWalletEntity implements Serializ
     public void setReviewOfac(ReviewOfac reviewOfac) {
         this.reviewOfac = reviewOfac;
     }
-    
+
     @Override
     public Object getPk() {
         return getId();
@@ -223,5 +231,5 @@ public class AffiliationRequest extends AbstractWalletEntity implements Serializ
     public String getTableName() throws TableNotFoundException {
         return super.getTableName(this.getClass());
     }
-    
+
 }

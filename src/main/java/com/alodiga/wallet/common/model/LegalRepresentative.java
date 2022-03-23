@@ -10,9 +10,9 @@ import com.alodiga.wallet.common.genericEJB.AbstractWalletEntity;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -54,59 +54,70 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 public class LegalRepresentative extends AbstractWalletEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @Basic(optional = false)
+
     @Size(min = 1, max = 40)
     @Column(name = "identificationNumber")
     private String identificationNumber;
+
     @Size(max = 40)
     @Column(name = "identificationNumberOld")
     private String identificationNumberOld;
+
     @Column(name = "dueDateDocumentIdentification")
     @Temporal(TemporalType.DATE)
     private Date dueDateDocumentIdentification;
-    @Basic(optional = false)
+
     @Size(min = 1, max = 50)
     @Column(name = "firstNames")
     private String firstNames;
-    @Basic(optional = false)
+
     @Size(min = 1, max = 50)
     @Column(name = "lastNames")
     private String lastNames;
-    @Basic(optional = false)
+
     @Column(name = "age")
     private int age;
+
     @Size(max = 1)
     @Column(name = "gender")
     private String gender;
+
     @Size(max = 50)
     @Column(name = "placeBirth")
     private String placeBirth;
-    @Basic(optional = false)
+
     @Column(name = "dateBirth")
     @Temporal(TemporalType.DATE)
     private Date dateBirth;
-    @OneToMany(mappedBy = "legalRepresentativeId")
+
+    @OneToMany(mappedBy = "legalRepresentativeId", fetch = FetchType.LAZY)
     private Collection<LegalPerson> legalPersonCollection;
+
     @JoinColumn(name = "documentsPersonTypeId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     private DocumentsPersonType documentsPersonTypeId;
+
     @JoinColumn(name = "personId", referencedColumnName = "id")
-    @OneToOne(optional = false)
+    @OneToOne(fetch = FetchType.LAZY)
     private Person personId;
+
     @JoinColumn(name = "civilStatusId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     private CivilStatus civilStatusId;
+
     @JoinColumn(name = "statusApplicantId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     private StatusApplicant statusApplicantId;
+
     @Column(name = "createDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createDate;
+
     @Column(name = "updateDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateDate;
@@ -264,7 +275,7 @@ public class LegalRepresentative extends AbstractWalletEntity implements Seriali
     public void setCivilStatusId(CivilStatus civilStatusId) {
         this.civilStatusId = civilStatusId;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 0;

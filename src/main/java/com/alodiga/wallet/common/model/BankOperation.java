@@ -7,7 +7,6 @@ package com.alodiga.wallet.common.model;
 
 import java.io.Serializable;
 import java.math.BigInteger;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,20 +20,9 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import com.alodiga.wallet.common.exception.TableNotFoundException;
 import com.alodiga.wallet.common.genericEJB.AbstractWalletEntity;
-import com.alodiga.wallet.common.model.Bank;
-import com.alodiga.wallet.common.model.BankOperation;
-import com.alodiga.wallet.common.model.BankOperationMode;
-import com.alodiga.wallet.common.model.BankOperationType;
-import com.alodiga.wallet.common.model.Commission;
-import com.alodiga.wallet.common.model.Product;
-import com.alodiga.wallet.common.model.Transaction;
-import java.util.Collection;
 import java.util.Date;
-import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.xml.bind.annotation.XmlTransient;
-import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
@@ -44,7 +32,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @Table(name = "bank_operation")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "BankOperation.findAll", query = "SELECT b FROM BankOperation b"), 
+    @NamedQuery(name = "BankOperation.findAll", query = "SELECT b FROM BankOperation b"),
     @NamedQuery(name = "BankOperation.findById", query = "SELECT b FROM BankOperation b WHERE b.id = :id"),
     @NamedQuery(name = "BankOperation.findByUserSourceId", query = "SELECT b FROM BankOperation b WHERE b.userSourceId = :userSourceId"),
     @NamedQuery(name = "BankOperation.findByBankOperationNumber", query = "SELECT b FROM BankOperation b WHERE b.bankOperationNumber = :bankOperationNumber")})
@@ -53,57 +41,74 @@ public class BankOperation extends AbstractWalletEntity implements Serializable 
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id")
     private Long id;
+
     @Column(name = "bankOperationDate")
     @Temporal(TemporalType.DATE)
     private Date bankOperationDate;
-    @Basic(optional = false)
+
     @Column(name = "bankOperationAmount")
     private float bankOperationAmount;
+
     @JoinColumn(name = "accountBankId", referencedColumnName = "id")
     @ManyToOne
     private AccountBank accountBankId;
+
     @JoinColumn(name = "paymentTypeId", referencedColumnName = "id")
     @ManyToOne
     private PaymentType paymentTypeId;
-    private static final long serialVersionUID = 1L;    
+    private static final long serialVersionUID = 1L;
+
     @Column(name = "userSourceId")
     private BigInteger userSourceId;
+
     @Column(name = "bankOperationNumber")
     private String bankOperationNumber;
+
     @Column(name = "responsible")
     private String responsible;
+
     @Column(name = "observations")
     private String observations;
+
     @JoinColumn(name = "commisionId", referencedColumnName = "id")
     @ManyToOne
     private Commission commisionId;
+
     @JoinColumn(name = "productId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Product productId;
+
     @JoinColumn(name = "transactionId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Transaction transactionId;
+
     @JoinColumn(name = "bankId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Bank bankId;
+
     @JoinColumn(name = "statusBankOperationId", referencedColumnName = "id")
     private StatusBankOperation statusBankOperationId;
+
     @JoinColumn(name = "bankOperationTypeId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private BankOperationType bankOperationTypeId;
+
     @JoinColumn(name = "bankOperationModeId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private BankOperationMode bankOperationModeId;
+
     @Column(name = "businessId")
     private BigInteger businessId;
+
     @Column(name = "accountBankBusinessId")
     private BigInteger accountBankBusinessId;
+
     @Column(name = "createDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createDate;
+
     @Column(name = "updateDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateDate;
@@ -138,7 +143,7 @@ public class BankOperation extends AbstractWalletEntity implements Serializable 
     public void setBankOperationNumber(String bankOperationNumber) {
         this.bankOperationNumber = bankOperationNumber;
     }
-    
+
     public String getResponsible() {
         return responsible;
     }
@@ -251,7 +256,7 @@ public class BankOperation extends AbstractWalletEntity implements Serializable 
     public String toString() {
         return "com.alodiga.wallet.model.BankOperation[ id=" + id + " ]";
     }
-    
+
     @Override
     public Object getPk() {
         return getId();
@@ -294,20 +299,20 @@ public class BankOperation extends AbstractWalletEntity implements Serializable 
         this.paymentTypeId = paymentTypeId;
     }
 
-	public BigInteger getBusinessId() {
-		return businessId;
-	}
+    public BigInteger getBusinessId() {
+        return businessId;
+    }
 
-	public void setBusinessId(BigInteger businessId) {
-		this.businessId = businessId;
-	}
+    public void setBusinessId(BigInteger businessId) {
+        this.businessId = businessId;
+    }
 
-	public BigInteger getAccountBankBusinessId() {
-		return accountBankBusinessId;
-	}
+    public BigInteger getAccountBankBusinessId() {
+        return accountBankBusinessId;
+    }
 
-	public void setAccountBankBusinessId(BigInteger accountBankBusinessId) {
-		this.accountBankBusinessId = accountBankBusinessId;
-	}	
-    
+    public void setAccountBankBusinessId(BigInteger accountBankBusinessId) {
+        this.accountBankBusinessId = accountBankBusinessId;
+    }
+
 }

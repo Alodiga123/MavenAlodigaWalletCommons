@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.alodiga.wallet.common.model;
 
 import com.alodiga.wallet.common.exception.TableNotFoundException;
@@ -10,7 +5,6 @@ import com.alodiga.wallet.common.genericEJB.AbstractWalletEntity;
 import com.alodiga.wallet.common.utils.QueryConstants;
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -47,31 +41,37 @@ import javax.xml.bind.annotation.XmlType;
 public class ReviewOfac extends AbstractWalletEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @Basic(optional = false)
+
     @Column(name = "resultReview")
     private float resultReview;
+
     @Size(max = 1000)
     @Column(name = "observations")
     private String observations;
+
     @Column(name = "createDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createDate;
+
     @Column(name = "updateDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateDate;
+
     @JoinColumn(name = "affiliationRequestId", referencedColumnName = "id")
-    @OneToOne(optional = false)
+    @OneToOne
     private AffiliationRequest affiliationRequestId;
+
     @JoinColumn(name = "personId", referencedColumnName = "id")
-    @OneToOne(optional = false)
+    @OneToOne
     private Person personId;
+
     @JoinColumn(name = "userReviewId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private User userReviewId;
 
     public ReviewOfac() {

@@ -1,17 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.alodiga.wallet.common.model;
 
 import com.alodiga.wallet.common.exception.TableNotFoundException;
 import com.alodiga.wallet.common.genericEJB.AbstractWalletEntity;
 import com.alodiga.wallet.common.utils.QueryConstants;
 import java.io.Serializable;
-import java.util.Collection;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,12 +13,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
-import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
@@ -45,24 +34,27 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 public class CollectionType extends AbstractWalletEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
+
     @Size(min = 1, max = 50)
     @Column(name = "description")
     private String description;
+
     @JoinColumn(name = "countryId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Country countryId;
+
     @JoinColumn(name = "personTypeId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private PersonType personTypeId;
+
     @Column(name = "orden")
     private String orden;
-    
+
     public CollectionType() {
     }
 
@@ -98,7 +90,7 @@ public class CollectionType extends AbstractWalletEntity implements Serializable
     public void setCountryId(Country countryId) {
         this.countryId = countryId;
     }
-    
+
     public PersonType getPersonTypeId() {
         return personTypeId;
     }
@@ -114,8 +106,6 @@ public class CollectionType extends AbstractWalletEntity implements Serializable
     public void setOrden(String orden) {
         this.orden = orden;
     }
-    
-    
 
     @Override
     public int hashCode() {

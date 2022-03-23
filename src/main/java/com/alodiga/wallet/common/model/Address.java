@@ -1,12 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.alodiga.wallet.common.model;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,6 +15,7 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import com.alodiga.wallet.common.exception.TableNotFoundException;
 import com.alodiga.wallet.common.genericEJB.AbstractWalletEntity;
+import javax.persistence.FetchType;
 import javax.xml.bind.annotation.XmlType;
 
 /**
@@ -32,71 +27,83 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "maw_address")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Address.findAll", query = "SELECT a FROM Address a")
-    , @NamedQuery(name = "Address.findById", query = "SELECT a FROM Address a WHERE a.id = :id")
-    , @NamedQuery(name = "Address.findByZipCode", query = "SELECT a FROM Address a WHERE a.zipCode = :zipCode")
-    , @NamedQuery(name = "Address.findByNameStreet", query = "SELECT a FROM Address a WHERE a.nameStreet = :nameStreet")
-    , @NamedQuery(name = "Address.findByNameEdification", query = "SELECT a FROM Address a WHERE a.nameEdification = :nameEdification")
-    , @NamedQuery(name = "Address.findByTower", query = "SELECT a FROM Address a WHERE a.tower = :tower")
-    , @NamedQuery(name = "Address.findByFloor", query = "SELECT a FROM Address a WHERE a.floor = :floor")
-    , @NamedQuery(name = "Address.findByUrbanization", query = "SELECT a FROM Address a WHERE a.urbanization = :urbanization")
-    , @NamedQuery(name = "Address.findByAddressLine1", query = "SELECT a FROM Address a WHERE a.addressLine1 = :addressLine1")
-    , @NamedQuery(name = "Address.findByAddressLine2", query = "SELECT a FROM Address a WHERE a.addressLine2 = :addressLine2")
-    , @NamedQuery(name = "Address.findByIndMainAddress", query = "SELECT a FROM Address a WHERE a.indMainAddress = :indMainAddress")})
+    @NamedQuery(name = "Address.findAll", query = "SELECT a FROM Address a"),
+    @NamedQuery(name = "Address.findById", query = "SELECT a FROM Address a WHERE a.id = :id"),
+    @NamedQuery(name = "Address.findByZipCode", query = "SELECT a FROM Address a WHERE a.zipCode = :zipCode"),
+    @NamedQuery(name = "Address.findByNameStreet", query = "SELECT a FROM Address a WHERE a.nameStreet = :nameStreet"),
+    @NamedQuery(name = "Address.findByNameEdification", query = "SELECT a FROM Address a WHERE a.nameEdification = :nameEdification"),
+    @NamedQuery(name = "Address.findByTower", query = "SELECT a FROM Address a WHERE a.tower = :tower"),
+    @NamedQuery(name = "Address.findByFloor", query = "SELECT a FROM Address a WHERE a.floor = :floor"),
+    @NamedQuery(name = "Address.findByUrbanization", query = "SELECT a FROM Address a WHERE a.urbanization = :urbanization"),
+    @NamedQuery(name = "Address.findByAddressLine1", query = "SELECT a FROM Address a WHERE a.addressLine1 = :addressLine1"),
+    @NamedQuery(name = "Address.findByAddressLine2", query = "SELECT a FROM Address a WHERE a.addressLine2 = :addressLine2"),
+    @NamedQuery(name = "Address.findByIndMainAddress", query = "SELECT a FROM Address a WHERE a.indMainAddress = :indMainAddress")})
 
 public class Address extends AbstractWalletEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @Basic(optional = false)
+
     @Size(min = 1, max = 45)
     @Column(name = "zipCode")
     private String zipCode;
+
     @Size(max = 50)
     @Column(name = "nameStreet")
     private String nameStreet;
+
     @Size(max = 50)
     @Column(name = "nameEdification")
     private String nameEdification;
+
     @Size(max = 40)
     @Column(name = "tower")
     private String tower;
+
     @Column(name = "floor")
     private Integer floor;
+
     @Size(max = 50)
     @Column(name = "urbanization")
     private String urbanization;
-    @Basic(optional = false)
+
     @Size(min = 1, max = 255)
     @Column(name = "addressLine1")
     private String addressLine1;
+
     @Size(max = 250)
     @Column(name = "addressLine2")
     private String addressLine2;
-    @Basic(optional = false)
+
     @Column(name = "indMainAddress")
     private boolean indMainAddress;
+
     @JoinColumn(name = "addressTypeId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     private AddressType addressTypeId;
+
     @JoinColumn(name = "cityId", referencedColumnName = "id")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private City cityId;
+
     @JoinColumn(name = "countryId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Country countryId;
+
     @JoinColumn(name = "countyId", referencedColumnName = "id")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private County countyId;
+
     @JoinColumn(name = "edificationTypeId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     private EdificationType edificationTypeId;
+
     @JoinColumn(name = "streetTypeId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     private StreetType streetTypeId;
 
     public Address() {
@@ -265,7 +272,7 @@ public class Address extends AbstractWalletEntity implements Serializable {
     public String toString() {
         return "com.alodiga.wallet.common.model.Address[ id=" + id + " ]";
     }
-    
+
     @Override
     public Object getPk() {
         return getId();

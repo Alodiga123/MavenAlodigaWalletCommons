@@ -1,12 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.alodiga.wallet.common.model;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,9 +15,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import com.alodiga.wallet.common.exception.TableNotFoundException;
 import com.alodiga.wallet.common.genericEJB.AbstractWalletEntity;
-import com.alodiga.wallet.common.model.Category;
-import com.alodiga.wallet.common.model.CategoryData;
-import com.alodiga.wallet.common.model.Language;
 
 /**
  *
@@ -38,23 +29,26 @@ import com.alodiga.wallet.common.model.Language;
     @NamedQuery(name = "CategoryData.findByAlias", query = "SELECT c FROM CategoryData c WHERE c.alias = :alias"),
     @NamedQuery(name = "CategoryData.findByDescription", query = "SELECT c FROM CategoryData c WHERE c.description = :description")})
 public class CategoryData extends AbstractWalletEntity implements Serializable {
+
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @Basic(optional = false)
+
     @Column(name = "alias")
     private String alias;
-    @Basic(optional = false)
+
     @Column(name = "description")
     private String description;
+
     @JoinColumn(name = "languageId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Language languageId;
+
     @JoinColumn(name = "categoryId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Category categoryId;
 
     public CategoryData() {
@@ -134,7 +128,7 @@ public class CategoryData extends AbstractWalletEntity implements Serializable {
     public String toString() {
         return "dto.CategoryData[ id=" + id + " ]";
     }
-    
+
     @Override
     public Object getPk() {
         return getId();
@@ -144,5 +138,5 @@ public class CategoryData extends AbstractWalletEntity implements Serializable {
     public String getTableName() throws TableNotFoundException {
         return super.getTableName(this.getClass());
     }
-    
+
 }

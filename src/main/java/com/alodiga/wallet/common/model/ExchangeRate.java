@@ -1,15 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.alodiga.wallet.common.model;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,13 +11,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
-import org.codehaus.jackson.annotate.JsonIgnore;
 import com.alodiga.wallet.common.exception.TableNotFoundException;
 import com.alodiga.wallet.common.genericEJB.AbstractWalletEntity;
 import com.alodiga.wallet.common.utils.QueryConstants;
@@ -38,7 +27,7 @@ import com.alodiga.wallet.common.utils.QueryConstants;
 @Table(name = "exchange_rate")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "ExchangeRate.findAll", query = "SELECT e FROM ExchangeRate e"), 
+    @NamedQuery(name = "ExchangeRate.findAll", query = "SELECT e FROM ExchangeRate e"),
     @NamedQuery(name = "ExchangeRate.findById", query = "SELECT e FROM ExchangeRate e WHERE e.id = :id"),
     @NamedQuery(name = "ExchangeRate.findByValue", query = "SELECT e FROM ExchangeRate e WHERE e.value = :value"),
     @NamedQuery(name = "ExchangeRate.findByProduct", query = "SELECT e FROM ExchangeRate e WHERE e.productId.id = :productId AND e.endingDate is null"),
@@ -49,22 +38,25 @@ import com.alodiga.wallet.common.utils.QueryConstants;
 public class ExchangeRate extends AbstractWalletEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @Basic(optional = false)
+
     @Column(name = "value")
     private float value;
+
     @Column(name = "beginningDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date beginningDate;
+
     @Column(name = "endingDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date endingDate;
+
     @JoinColumn(name = "productId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Product productId;
 
     public ExchangeRate() {
@@ -143,7 +135,7 @@ public class ExchangeRate extends AbstractWalletEntity implements Serializable {
     public void setProductId(Product productId) {
         this.productId = productId;
     }
-    
+
     @Override
     public Object getPk() {
         return getId();

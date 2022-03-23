@@ -7,7 +7,6 @@ package com.alodiga.wallet.common.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -43,33 +42,44 @@ import com.alodiga.wallet.common.genericEJB.AbstractWalletEntity;
     @NamedQuery(name = "BalanceHistory.lastDateByUser", query = "SELECT MAX(b.date) FROM BalanceHistory b WHERE b.userId = :userId"),
     @NamedQuery(name = "BalanceHistory.findByAdjusmentInfo", query = "SELECT b FROM BalanceHistory b WHERE b.adjusmentInfo = :adjusmentInfo")})
 
-public class BalanceHistory  extends AbstractWalletEntity implements Serializable {
+public class BalanceHistory extends AbstractWalletEntity implements Serializable {
+
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id")
-    private Long id;  
+    private Long id;
+
     @Column(name = "userId")
-    private long userId;    
+    private long userId;
+
     @Column(name = "businessId")
-    private long businessId;   
+    private long businessId;
+
     @Column(name = "transactionBusinessId")
     private long transactionBusinessId;
+
     @Column(name = "oldAmount")
-    private float oldAmount;    
+    private float oldAmount;
+
     @Column(name = "currentAmount")
-    private float currentAmount;   
+    private float currentAmount;
+
     @Column(name = "date")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date date;    
+    private Date date;
+
     @Column(name = "version")
-    private long version;    
+    private long version;
+
     @Column(name = "adjusmentInfo")
     private String adjusmentInfo;
+
     @JoinColumn(name = "transactionId", referencedColumnName = "id")
     @ManyToOne
-    private Transaction transactionId;    
+    private Transaction transactionId;
+
     @JoinColumn(name = "productId", referencedColumnName = "id")
     @ManyToOne
     private Product productId;
@@ -81,7 +91,7 @@ public class BalanceHistory  extends AbstractWalletEntity implements Serializabl
         this.id = id;
     }
 
-    public BalanceHistory(Long id, long userId,long businessId, float oldAmount, float currentAmount, Date date, long version) {
+    public BalanceHistory(Long id, long userId, long businessId, float oldAmount, float currentAmount, Date date, long version) {
         this.id = id;
         this.userId = userId;
         this.businessId = businessId;
@@ -108,22 +118,22 @@ public class BalanceHistory  extends AbstractWalletEntity implements Serializabl
     }
 
     public long getBusinessId() {
-		return businessId;
-	}
+        return businessId;
+    }
 
-	public void setBusinessId(long businessId) {
-		this.businessId = businessId;
-	}
+    public void setBusinessId(long businessId) {
+        this.businessId = businessId;
+    }
 
-	public long getTransactionBusinessId() {
-		return transactionBusinessId;
-	}
+    public long getTransactionBusinessId() {
+        return transactionBusinessId;
+    }
 
-	public void setTransactionBusinessId(long transactionBusinessId) {
-		this.transactionBusinessId = transactionBusinessId;
-	}
+    public void setTransactionBusinessId(long transactionBusinessId) {
+        this.transactionBusinessId = transactionBusinessId;
+    }
 
-	public float getOldAmount() {
+    public float getOldAmount() {
         return oldAmount;
     }
 
@@ -203,7 +213,7 @@ public class BalanceHistory  extends AbstractWalletEntity implements Serializabl
     public String toString() {
         return "dto.BalanceHistory[ id=" + id + " ]";
     }
-    
+
     @Override
     public Object getPk() {
         return getId();
@@ -213,5 +223,5 @@ public class BalanceHistory  extends AbstractWalletEntity implements Serializabl
     public String getTableName() throws TableNotFoundException {
         return super.getTableName(this.getClass());
     }
-    
+
 }

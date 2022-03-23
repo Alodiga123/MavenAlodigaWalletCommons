@@ -2,7 +2,6 @@ package com.alodiga.wallet.common.model;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,7 +13,6 @@ import javax.persistence.Table;
 
 import com.alodiga.wallet.common.exception.TableNotFoundException;
 import com.alodiga.wallet.common.genericEJB.AbstractWalletEntity;
-import com.alodiga.wallet.common.model.PermissionGroupData;
 
 import javax.persistence.FetchType;
 
@@ -26,13 +24,15 @@ import javax.persistence.FetchType;
 public class PermissionGroup extends AbstractWalletEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private boolean enabled;
     private String name;
-    //bi-directional many-to-one association to PermissionGroupData
-    @OneToMany(mappedBy = "permissionGroup", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+
+//bi-directional many-to-one association to PermissionGroupData
+    @OneToMany(mappedBy = "permissionGroup", fetch = FetchType.EAGER)
     private List<PermissionGroupData> permissionGroupData;
 
     public PermissionGroup() {

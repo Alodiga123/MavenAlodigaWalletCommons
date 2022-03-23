@@ -10,7 +10,6 @@ import com.alodiga.wallet.common.genericEJB.AbstractWalletEntity;
 import com.alodiga.wallet.common.utils.QueryConstants;
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -34,37 +33,40 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "calendar_days")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "CalendarDays.findAll", query = "SELECT c FROM CalendarDays c")
-    , @NamedQuery(name = "CalendarDays.findById", query = "SELECT c FROM CalendarDays c WHERE c.id = :id")
-    , @NamedQuery(name = "CalendarDays.findByHolidayDate", query = "SELECT c FROM CalendarDays c WHERE c.holidayDate = :holidayDate")
-    , @NamedQuery(name = "CalendarDays.findByDescription", query = "SELECT c FROM CalendarDays c WHERE c.description = :description")
-    , @NamedQuery(name = "CalendarDays.findByCreateDate", query = "SELECT c FROM CalendarDays c WHERE c.createDate = :createDate")
-    , @NamedQuery(name = "CalendarDays.findByUpdateDate", query = "SELECT c FROM CalendarDays c WHERE c.updateDate = :updateDate")
-    , @NamedQuery(name = QueryConstants.HOLI_DAY_EXIST_IN_BD_CALENDAR_DAYS, query = "SELECT c FROM CalendarDays c WHERE c.holidayDate = :holidayDate AND c.countryId = :countryId")})
+    @NamedQuery(name = "CalendarDays.findAll", query = "SELECT c FROM CalendarDays c"),
+    @NamedQuery(name = "CalendarDays.findById", query = "SELECT c FROM CalendarDays c WHERE c.id = :id"),
+    @NamedQuery(name = "CalendarDays.findByHolidayDate", query = "SELECT c FROM CalendarDays c WHERE c.holidayDate = :holidayDate"),
+    @NamedQuery(name = "CalendarDays.findByDescription", query = "SELECT c FROM CalendarDays c WHERE c.description = :description"),
+    @NamedQuery(name = "CalendarDays.findByCreateDate", query = "SELECT c FROM CalendarDays c WHERE c.createDate = :createDate"),
+    @NamedQuery(name = "CalendarDays.findByUpdateDate", query = "SELECT c FROM CalendarDays c WHERE c.updateDate = :updateDate"),
+    @NamedQuery(name = QueryConstants.HOLI_DAY_EXIST_IN_BD_CALENDAR_DAYS, query = "SELECT c FROM CalendarDays c WHERE c.holidayDate = :holidayDate AND c.countryId = :countryId")})
 public class CalendarDays extends AbstractWalletEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @Basic(optional = false)
+
     @Column(name = "holidayDate")
     @Temporal(TemporalType.DATE)
     private Date holidayDate;
+
     @Size(max = 50)
     @Column(name = "description")
     private String description;
-    @Basic(optional = false)
+
     @Column(name = "createDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createDate;
+
     @Column(name = "updateDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateDate;
+
     @JoinColumn(name = "countryId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Country countryId;
 
     public CalendarDays() {
@@ -156,5 +158,5 @@ public class CalendarDays extends AbstractWalletEntity implements Serializable {
     public String getTableName() throws TableNotFoundException {
         return super.getTableName(this.getClass());
     }
-    
+
 }

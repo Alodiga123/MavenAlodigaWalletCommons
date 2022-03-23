@@ -8,7 +8,6 @@ package com.alodiga.wallet.common.model;
 import com.alodiga.wallet.common.exception.TableNotFoundException;
 import com.alodiga.wallet.common.genericEJB.AbstractWalletEntity;
 import java.io.Serializable;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -32,35 +31,36 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "maw_bank")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Bank.findAll", query = "SELECT b FROM Bank b")
-    , @NamedQuery(name = "Bank.findById", query = "SELECT b FROM Bank b WHERE b.id = :id")
-    , @NamedQuery(name = "Bank.findByName", query = "SELECT b FROM Bank b WHERE b.name = :name")
-    , @NamedQuery(name = "Bank.findByCountryIdBank", query = "SELECT b FROM Bank b WHERE b.countryId.id = :countryId")
-    , @NamedQuery(name = "Bank.findByAbaCode", query = "SELECT b FROM Bank b WHERE b.abaCode = :abaCode")
-    , @NamedQuery(name = "Bank.findByCountryId", query = "SELECT b FROM Bank b WHERE b.countryId.id = :countryId")
-    , @NamedQuery(name = "Bank.findBySwiftCode", query = "SELECT b FROM Bank b WHERE b.swiftCode = :swiftCode")})
+    @NamedQuery(name = "Bank.findAll", query = "SELECT b FROM Bank b"),
+    @NamedQuery(name = "Bank.findById", query = "SELECT b FROM Bank b WHERE b.id = :id"),
+    @NamedQuery(name = "Bank.findByName", query = "SELECT b FROM Bank b WHERE b.name = :name"),
+    @NamedQuery(name = "Bank.findByCountryIdBank", query = "SELECT b FROM Bank b WHERE b.countryId.id = :countryId"),
+    @NamedQuery(name = "Bank.findByAbaCode", query = "SELECT b FROM Bank b WHERE b.abaCode = :abaCode"),
+    @NamedQuery(name = "Bank.findByCountryId", query = "SELECT b FROM Bank b WHERE b.countryId.id = :countryId"),
+    @NamedQuery(name = "Bank.findBySwiftCode", query = "SELECT b FROM Bank b WHERE b.swiftCode = :swiftCode")})
 
 public class Bank extends AbstractWalletEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @Basic(optional = false)
+
     @Size(min = 1, max = 255)
     @Column(name = "name")
     private String name;
+
     @Size(max = 30)
     @Column(name = "abaCode")
     private String abaCode;
-    @Basic(optional = false)
+
     @Size(min = 1, max = 20)
     @Column(name = "SwiftCode")
     private String swiftCode;
+
     @JoinColumn(name = "countryId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Country countryId;
 
     public Bank() {
@@ -150,5 +150,5 @@ public class Bank extends AbstractWalletEntity implements Serializable {
     public String getTableName() throws TableNotFoundException {
         return super.getTableName(this.getClass());
     }
-    
+
 }

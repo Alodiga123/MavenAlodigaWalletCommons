@@ -1,15 +1,6 @@
 package com.alodiga.wallet.common.model;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 import java.io.Serializable;
-import java.util.Collection;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,14 +10,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 import com.alodiga.wallet.common.exception.TableNotFoundException;
 import com.alodiga.wallet.common.genericEJB.AbstractWalletEntity;
-import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
@@ -50,61 +38,71 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 
 public class Product extends AbstractWalletEntity implements Serializable {
 
-    public static final String NAME = "name";    
-    public static final Long ALOCOIN_PRODUCT = 1L ;
-    public static final Long ALODIGA_BALANCE = 2L ;
-    public static final Long PREPAID_CARD = 3L ;
-    
+    public static final String NAME = "name";
+    public static final Long ALOCOIN_PRODUCT = 1L;
+    public static final Long ALODIGA_BALANCE = 2L;
+    public static final Long PREPAID_CARD = 3L;
+
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @Basic(optional = false)
+
     @Column(name = "name")
     private String name;
-    @Basic(optional = false)
+
     @Column(name = "taxInclude")
     private boolean taxInclude;
-    @Basic(optional = false)
+
     @Column(name = "enabled")
     private boolean enabled;
-    @Basic(optional = false)
+
     @Column(name = "referenceCode")
     private String referenceCode;
-    @Basic(optional = false)
+
     @Column(name = "symbol")
     private String symbol;
+
     @Column(name = "isDefaultProduct")
     private boolean isDefaultProduct;
+
     @Column(name = "isUsePrepaidCard")
     private boolean isUsePrepaidCard;
-    @Basic(optional = false)
+
     @Column(name = "isFree")
     private boolean isFree;
-    @Basic(optional = false)
+
     @Column(name = "isAlocashProduct")
     private boolean isAlocashProduct;
+
     @Column(name = "isPayTopUp")
     private boolean isPayTopUp;
+
     @Column(name = "isExchangeProduct")
     private boolean isExchangeProduct;
+
     @Column(name = "isRemettence")
     private boolean isRemettence;
+
     @Column(name = "isPaymentInfo")
     private boolean isPaymentInfo;
+
     @JoinColumn(name = "categoryId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Category categoryId;
+
     @JoinColumn(name = "countryId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Country countryId;
+
     @Column(name = "indHasAssociatedBank")
     private Boolean indHasAssociatedBank;
+
     @Transient
     private Float currentBalance;
-    
+
     public Product() {
     }
 
@@ -112,7 +110,7 @@ public class Product extends AbstractWalletEntity implements Serializable {
         this.id = id;
     }
 
-    public Product(Long id, String name, boolean taxInclude, boolean enabled, String referenceCode, boolean isDefaultProduct, boolean isFree, boolean isAlocashProduct,String symbol, boolean isPayTopUp, boolean isExchangeProduct,boolean isRemettence_, boolean  isPaymentInfo, boolean  indHasAssociatedBank,  boolean isUsePrepaidCard) {
+    public Product(Long id, String name, boolean taxInclude, boolean enabled, String referenceCode, boolean isDefaultProduct, boolean isFree, boolean isAlocashProduct, String symbol, boolean isPayTopUp, boolean isExchangeProduct, boolean isRemettence_, boolean isPaymentInfo, boolean indHasAssociatedBank, boolean isUsePrepaidCard) {
         this.id = id;
         this.name = name;
         this.taxInclude = taxInclude;
@@ -126,7 +124,7 @@ public class Product extends AbstractWalletEntity implements Serializable {
         this.isExchangeProduct = isExchangeProduct;
         this.isRemettence = isRemettence_;
         this.isPaymentInfo = isPaymentInfo;
-        this.indHasAssociatedBank= indHasAssociatedBank;
+        this.indHasAssociatedBank = indHasAssociatedBank;
         this.isUsePrepaidCard = isUsePrepaidCard;
     }
 
@@ -200,7 +198,7 @@ public class Product extends AbstractWalletEntity implements Serializable {
 
     public void setIsAlocashProduct(boolean isAlocashProduct) {
         this.isAlocashProduct = isAlocashProduct;
-             
+
     }
 
     public boolean isIsPayTopUp() {
@@ -234,8 +232,6 @@ public class Product extends AbstractWalletEntity implements Serializable {
     public void setIsPaymentInfo(boolean isPaymentInfo) {
         this.isPaymentInfo = isPaymentInfo;
     }
-    
-    
 
     public Category getCategoryId() {
         return categoryId;
@@ -243,7 +239,7 @@ public class Product extends AbstractWalletEntity implements Serializable {
 
     public void setCategoryId(Category categoryId) {
         this.categoryId = categoryId;
-    }    
+    }
 
     public Country getCountryId() {
         return countryId;
@@ -277,23 +273,22 @@ public class Product extends AbstractWalletEntity implements Serializable {
     public String toString() {
         return "dto.Product[ id=" + id + " ]";
     }
-    
+
     public void setCurrentBalance(Float currentBalance) {
         this.currentBalance = currentBalance;
-}
+    }
 
     public Float getCurrentBalance() {
         return currentBalance;
     }
-    
-     public String getSymbol() {
+
+    public String getSymbol() {
         return symbol;
     }
 
     public void setSymbol(String symbol) {
         this.symbol = symbol;
     }
-
 
     @Override
     public Object getPk() {
@@ -314,4 +309,3 @@ public class Product extends AbstractWalletEntity implements Serializable {
     }
 
 }
-

@@ -1,13 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.alodiga.wallet.common.model;
 
 import java.io.Serializable;
-import java.util.Collection;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,17 +10,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 import com.alodiga.wallet.common.exception.TableNotFoundException;
 import com.alodiga.wallet.common.genericEJB.AbstractWalletEntity;
-import com.alodiga.wallet.common.model.Address;
-import com.alodiga.wallet.common.model.County;
-import com.alodiga.wallet.common.model.State;
-import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
@@ -44,18 +31,20 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 public class County extends AbstractWalletEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @Basic(optional = false)
+
     @Column(name = "name")
     private String name;
+
     @Column(name = "shortName")
     private String shortName;
+
     @JoinColumn(name = "stateId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private State stateId;
 
     public County() {
@@ -126,7 +115,7 @@ public class County extends AbstractWalletEntity implements Serializable {
     public String toString() {
         return "dto.County[ id=" + id + " ]";
     }
-    
+
     @Override
     public Object getPk() {
         return getId();

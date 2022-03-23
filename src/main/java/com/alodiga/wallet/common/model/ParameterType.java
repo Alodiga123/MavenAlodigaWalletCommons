@@ -1,14 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.alodiga.wallet.common.model;
 
 import java.io.Serializable;
 import java.util.Collection;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,8 +16,6 @@ import javax.xml.bind.annotation.XmlTransient;
 
 import com.alodiga.wallet.common.exception.TableNotFoundException;
 import com.alodiga.wallet.common.genericEJB.AbstractWalletEntity;
-import com.alodiga.wallet.common.model.ParameterType;
-import com.alodiga.wallet.common.model.ReportParameter;
 
 /**
  *
@@ -38,16 +29,18 @@ import com.alodiga.wallet.common.model.ReportParameter;
     @NamedQuery(name = "ParameterType.findById", query = "SELECT p FROM ParameterType p WHERE p.id = :id"),
     @NamedQuery(name = "ParameterType.findByName", query = "SELECT p FROM ParameterType p WHERE p.name = :name")})
 public class ParameterType extends AbstractWalletEntity implements Serializable {
+
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @Basic(optional = false)
+
     @Column(name = "name")
     private String name;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "parameterTypeId")
+
+    @OneToMany(mappedBy = "parameterTypeId")
     private Collection<ReportParameter> reportParameterCollection;
 
     public ParameterType() {
@@ -111,7 +104,7 @@ public class ParameterType extends AbstractWalletEntity implements Serializable 
     public String toString() {
         return "dto.ParameterType[ id=" + id + " ]";
     }
-    
+
     @Override
     public Object getPk() {
         return getId();

@@ -1,14 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.alodiga.wallet.common.model;
 
 import java.io.Serializable;
 import java.util.Collection;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,8 +16,6 @@ import javax.xml.bind.annotation.XmlTransient;
 
 import com.alodiga.wallet.common.exception.TableNotFoundException;
 import com.alodiga.wallet.common.genericEJB.AbstractWalletEntity;
-import com.alodiga.wallet.common.model.Report;
-import com.alodiga.wallet.common.model.ReportType;
 
 /**
  *
@@ -39,18 +30,21 @@ import com.alodiga.wallet.common.model.ReportType;
     @NamedQuery(name = "ReportType.findByName", query = "SELECT r FROM ReportType r WHERE r.name = :name"),
     @NamedQuery(name = "ReportType.findByDescription", query = "SELECT r FROM ReportType r WHERE r.description = :description")})
 public class ReportType extends AbstractWalletEntity implements Serializable {
+
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id")
     private Long id;
+
     @Column(name = "name")
     private String name;
-    @Basic(optional = false)
+
     @Column(name = "description")
     private String description;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "reportTypeId")
+
+    @OneToMany(mappedBy = "reportTypeId")
     private Collection<Report> reportCollection;
 
     public ReportType() {
@@ -122,7 +116,7 @@ public class ReportType extends AbstractWalletEntity implements Serializable {
     public String toString() {
         return "dto.ReportType[ id=" + id + " ]";
     }
-    
+
     @Override
     public Object getPk() {
         return getId();

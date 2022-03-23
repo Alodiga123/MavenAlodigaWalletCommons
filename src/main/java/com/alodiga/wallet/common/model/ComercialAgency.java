@@ -6,9 +6,6 @@
 package com.alodiga.wallet.common.model;
 
 import java.io.Serializable;
-import java.util.Collection;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,13 +15,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
-import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
@@ -35,23 +29,24 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @XmlType(name = "maw_comercial_agency")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "ComercialAgency.findAll", query = "SELECT c FROM ComercialAgency c")
-    , @NamedQuery(name = "ComercialAgency.findById", query = "SELECT c FROM ComercialAgency c WHERE c.id = :id")
-    , @NamedQuery(name = "ComercialAgency.findByName", query = "SELECT c FROM ComercialAgency c WHERE c.name = :name")})
+    @NamedQuery(name = "ComercialAgency.findAll", query = "SELECT c FROM ComercialAgency c"),
+    @NamedQuery(name = "ComercialAgency.findById", query = "SELECT c FROM ComercialAgency c WHERE c.id = :id"),
+    @NamedQuery(name = "ComercialAgency.findByName", query = "SELECT c FROM ComercialAgency c WHERE c.name = :name")})
 public class ComercialAgency implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
+
     @Size(min = 1, max = 80)
     @Column(name = "name")
-    private String name;    
+    private String name;
+
     @JoinColumn(name = "cityId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private City cityId;
 
     public ComercialAgency() {
@@ -81,8 +76,6 @@ public class ComercialAgency implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-
-   
 
     public City getCityId() {
         return cityId;
@@ -116,5 +109,5 @@ public class ComercialAgency implements Serializable {
     public String toString() {
         return "com.alodiga.wallet.common.model.ComercialAgency[ id=" + id + " ]";
     }
-    
+
 }

@@ -1,16 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.alodiga.wallet.common.model;
 
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -49,30 +42,36 @@ import javax.validation.constraints.Size;
 public class PreferenceField extends AbstractWalletEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @Basic(optional = false)
+
     @Column(name = "name")
     private String name;
-    @Basic(optional = false)
+
     @Column(name = "enabled")
     private short enabled;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "preferenceFieldId")
+
+    @OneToMany(mappedBy = "preferenceFieldId")
     private Collection<PreferenceValue> preferenceValueCollection;
+
     @JoinColumn(name = "preferenceTypeId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private PreferenceType preferenceTypeId;
+
     @JoinColumn(name = "preferenceId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Preference preferenceId;
-    @OneToMany(mappedBy = "preferenceField", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+
+    @OneToMany(mappedBy = "preferenceField", fetch = FetchType.EAGER)
     private List<PreferenceFieldData> preferenceFieldData;
+
     @Size(max = 80)
     @Column(name = "description")
     private String description;
+
     @Size(max = 10)
     @Column(name = "code")
     private String code;
@@ -105,7 +104,7 @@ public class PreferenceField extends AbstractWalletEntity implements Serializabl
     public void setName(String name) {
         this.name = name;
     }
-    
+
     public String getDescription() {
         return description;
     }
@@ -113,7 +112,7 @@ public class PreferenceField extends AbstractWalletEntity implements Serializabl
     public void setDescription(String description) {
         this.description = description;
     }
-    
+
     public String getCode() {
         return code;
     }
@@ -121,7 +120,7 @@ public class PreferenceField extends AbstractWalletEntity implements Serializabl
     public void setCode(String code) {
         this.code = code;
     }
-    
+
     public short getEnabled() {
         return enabled;
     }
@@ -156,7 +155,7 @@ public class PreferenceField extends AbstractWalletEntity implements Serializabl
     }
 
     public PreferenceFieldData getPreferenceFieldDataByLanguageId(Long languageId) {
-    	PreferenceFieldData pd = null;
+        PreferenceFieldData pd = null;
         for (PreferenceFieldData pData : this.preferenceFieldData) {
             if (pData.getLanguage().getId().equals(languageId)) {
                 pd = pData;
@@ -165,8 +164,8 @@ public class PreferenceField extends AbstractWalletEntity implements Serializabl
         }
         return pd;
     }
-    
-	@Override
+
+    @Override
     public int hashCode() {
         int hash = 0;
         hash += (id != null ? id.hashCode() : 0);
@@ -201,5 +200,4 @@ public class PreferenceField extends AbstractWalletEntity implements Serializabl
         return super.getTableName(this.getClass());
     }
 
-    
 }

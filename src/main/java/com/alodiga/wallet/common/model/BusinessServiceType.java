@@ -9,7 +9,6 @@ import com.alodiga.wallet.common.exception.TableNotFoundException;
 import com.alodiga.wallet.common.genericEJB.AbstractWalletEntity;
 import com.alodiga.wallet.common.utils.QueryConstants;
 import java.io.Serializable;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,29 +30,31 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "business_service_type")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "BusinessServiceType.findAll", query = "SELECT b FROM BusinessServiceType b")
-    , @NamedQuery(name = "BusinessServiceType.findById", query = "SELECT b FROM BusinessServiceType b WHERE b.id = :id")
-    , @NamedQuery(name = "BusinessServiceType.findByDescription", query = "SELECT b FROM BusinessServiceType b WHERE b.description = :description")
-    , @NamedQuery(name = "BusinessServiceType.findByCode", query = "SELECT b FROM BusinessServiceType b WHERE b.code = :code")
-    , @NamedQuery(name = QueryConstants.BUSINESS_SERVICE_TYPE_BY_BUSINESS_TYPE , query = "SELECT b FROM BusinessServiceType b WHERE b.businessTypeId.id = :businessTypeId")
-    , @NamedQuery(name = QueryConstants.CODE_EXIST_IN_BD_BUSINESS_SERVICE_TYPE, query = "SELECT b FROM BusinessServiceType b WHERE b.code = :code")})
+    @NamedQuery(name = "BusinessServiceType.findAll", query = "SELECT b FROM BusinessServiceType b"),
+    @NamedQuery(name = "BusinessServiceType.findById", query = "SELECT b FROM BusinessServiceType b WHERE b.id = :id"),
+    @NamedQuery(name = "BusinessServiceType.findByDescription", query = "SELECT b FROM BusinessServiceType b WHERE b.description = :description"),
+    @NamedQuery(name = "BusinessServiceType.findByCode", query = "SELECT b FROM BusinessServiceType b WHERE b.code = :code"),
+    @NamedQuery(name = QueryConstants.BUSINESS_SERVICE_TYPE_BY_BUSINESS_TYPE, query = "SELECT b FROM BusinessServiceType b WHERE b.businessTypeId.id = :businessTypeId"),
+    @NamedQuery(name = QueryConstants.CODE_EXIST_IN_BD_BUSINESS_SERVICE_TYPE, query = "SELECT b FROM BusinessServiceType b WHERE b.code = :code")})
 
 public class BusinessServiceType extends AbstractWalletEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+
     @Size(max = 50)
     @Column(name = "description")
     private String description;
+
     @Size(max = 10)
     @Column(name = "code")
     private String code;
+
     @JoinColumn(name = "businessTypeId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private BusinessType businessTypeId;
 
     public BusinessServiceType() {
@@ -70,7 +71,7 @@ public class BusinessServiceType extends AbstractWalletEntity implements Seriali
     public void setId(Integer id) {
         this.id = id;
     }
-    
+
     public String getDescription() {
         return description;
     }
@@ -129,5 +130,5 @@ public class BusinessServiceType extends AbstractWalletEntity implements Seriali
     public String getTableName() throws TableNotFoundException {
         return super.getTableName(this.getClass());
     }
-    
+
 }
